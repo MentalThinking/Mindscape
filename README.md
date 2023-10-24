@@ -10,7 +10,7 @@ Because I put a lot of effort into combining the two and adding my own tweaks an
 
 Go ahead. Note that it exists 'as is' with zero support and nearly no effort will be made on my part to be sure it'll work for anyone who isn't me or my characters.
 
-# You should do <x> or <y>.
+# You should do \[this\] or \[that\].
 
 Open an issue, if I agree, I'll do that.
 
