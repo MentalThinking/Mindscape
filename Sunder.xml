@@ -2564,7 +2564,7 @@ if snd.class == "Zealot" and not snd.swaggered then
 						</regexCodePropertyList>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>empty pipe</name>
-							<script>snd.emptypipe = snd.smokedpipe</script>
+							<script>snd.emptypipes[snd.smokedpipe] = true</script>
 							<triggerType>0</triggerType>
 							<conditonLineDelta>0</conditonLineDelta>
 							<mStayOpen>0</mStayOpen>
@@ -2605,8 +2605,8 @@ snd.smokedpipe = "none"</script>
 						</Trigger>
 					</Trigger>
 					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
-						<name>filled pipe</name>
-						<script>snd.emptypipe = "none"</script>
+						<name>Pipes emptied by lumi/ec</name>
+						<script> snd.emptypipes = {reishi = true, willow = true, yarrow = true}</script>
 						<triggerType>0</triggerType>
 						<conditonLineDelta>0</conditonLineDelta>
 						<mStayOpen>0</mStayOpen>
@@ -2618,7 +2618,35 @@ snd.smokedpipe = "none"</script>
 						<colorTriggerFgColor>#000000</colorTriggerFgColor>
 						<colorTriggerBgColor>#000000</colorTriggerBgColor>
 						<regexCodeList>
-							<string>^You fill your pipe with .+\.$</string>
+							<string>^\w+ uses Tectonics Fossilise on you\.$</string>
+							<string>^\w+ uses Illumination Flare on you\.$</string>
+						</regexCodeList>
+						<regexCodePropertyList>
+							<integer>1</integer>
+							<integer>1</integer>
+						</regexCodePropertyList>
+					</Trigger>
+					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+						<name>filled pipe</name>
+						<script>local herbMap = {
+  ["a reishi mushroom"] = "reishi",
+  ["some willow bark"] = "willow",
+  ["a yarrow root"] = "yarrow",
+}
+local herb = herbMap[matches[2]]
+snd.emptypipes[herb] = false</script>
+						<triggerType>0</triggerType>
+						<conditonLineDelta>0</conditonLineDelta>
+						<mStayOpen>0</mStayOpen>
+						<mCommand></mCommand>
+						<packageName></packageName>
+						<mFgColor>#ff0000</mFgColor>
+						<mBgColor>#ffff00</mBgColor>
+						<mSoundFile></mSoundFile>
+						<colorTriggerFgColor>#000000</colorTriggerFgColor>
+						<colorTriggerBgColor>#000000</colorTriggerBgColor>
+						<regexCodeList>
+							<string>^You fill your pipe with (.+)\.$</string>
 						</regexCodeList>
 						<regexCodePropertyList>
 							<integer>1</integer>
@@ -2626,8 +2654,8 @@ snd.smokedpipe = "none"</script>
 					</Trigger>
 					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 						<name>no pipe</name>
-						<script>if matches[2] == snd.emptypipe then
- snd.emptypipe = "none"
+						<script>if snd.emptypipes[matches[2]] then
+ snd.emptypipes[matches[2]] = false
 end</script>
 						<triggerType>0</triggerType>
 						<conditonLineDelta>0</conditonLineDelta>
@@ -19074,7 +19102,7 @@ end</script>
 							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 								<name>Omen Down</name>
 								<script>snd.incomingomen = false
-snd.message(matches[3].." has been struck by omen!", "dendara")
+snd.message(matches[2].." has been struck by omen!", "dendara")
 </script>
 								<triggerType>0</triggerType>
 								<conditonLineDelta>0</conditonLineDelta>
@@ -20632,6 +20660,124 @@ send("wt " ..matches[2].. " STUNNED with ANGUISH!")
 							</Trigger>
 						</TriggerGroup>
 						<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+							<name>Teradrim/Tidesage</name>
+							<script></script>
+							<triggerType>0</triggerType>
+							<conditonLineDelta>0</conditonLineDelta>
+							<mStayOpen>0</mStayOpen>
+							<mCommand></mCommand>
+							<packageName></packageName>
+							<mFgColor>#ff0000</mFgColor>
+							<mBgColor>#ffff00</mBgColor>
+							<mSoundFile></mSoundFile>
+							<colorTriggerFgColor>#000000</colorTriggerFgColor>
+							<colorTriggerBgColor>#000000</colorTriggerBgColor>
+							<regexCodeList />
+							<regexCodePropertyList />
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Room got sandy</name>
+								<script>local index = table.index_of(gmcp.Room.Info.details,"sandy")
+if not index then 
+  table.insert(gmcp.Room.Info.details, "sandy")
+end
+</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>0</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>^\w+ uses? Desiccation Flood\.$</string>
+									<string>^\w+ uses? Desiccation Desert\.$</string>
+									<string>^A cascade of sand flows in from the \w+, settling over the surroundings\.$</string>
+									<string>^A swirling cloud of dust and sand sweeps in from the \w+, blanketing the area with a layer of sand\.$</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>1</integer>
+									<integer>1</integer>
+									<integer>1</integer>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Sand gone</name>
+								<script>local index = table.index_of(gmcp.Room.Info.details,"sandy")
+if index then 
+  table.remove(gmcp.Room.Info.details, index)
+end</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>0</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>There is not enough sand present in this location.</string>
+									<string>The sand pervading this area blows away as the magics controlling it disperse.</string>
+									<string>^\w+ uses? Desiccation Whirl\.$</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>3</integer>
+									<integer>3</integer>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Room got foggy</name>
+								<script>local index = table.index_of(gmcp.Room.Info.details, "fogged")
+if not index then 
+  table.insert(gmcp.Room.Info.details, "fogged")
+end
+</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>0</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>^\w+ uses? Inundation Inundate\.$</string>
+									<string>^\w+ uses? Inundation Fogbank\.$</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>1</integer>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Fog gone</name>
+								<script>local index = table.index_of(gmcp.Room.Info.details,"fogged")
+if index then 
+  table.remove(gmcp.Room.Info.details, index)
+end</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>0</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList />
+								<regexCodePropertyList />
+							</Trigger>
+						</TriggerGroup>
+						<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>Wayfarer</name>
 							<script></script>
 							<triggerType>0</triggerType>
@@ -21490,6 +21636,8 @@ end</script>
 							<name>poultice</name>
 							<script>if matches[2]:lower() == snd.target:lower() then
   snd.target_cured("slickness")
+  snd.target_cured("slough")
+  if snd.sloughTimer then killTimer(snd.sloughTimer) end
   if not snd.checkAff("burnt_skin") then
     if matches[4] == "epidermal" then
       snd.target_last_used_salve = "epidermal"
@@ -22365,8 +22513,10 @@ end</script>
 							<string>^Being unconscious, (\w+) falls over\.$</string>
 							<string>^(\w+) appears dizzy and falls to the ground\.$</string>
 							<string>^(\w+) is already fallen upon the ground\.$</string>
+							<string>^With a struggle, (\w+) attempts to call upon \w+ willpower reserves, however the effort leaves \w+ looking dizzy and weak. \w+ eyes quickly grow unfocused and .+ sways? slightly before crashing heavily to the ground, and \w+ quickly slips into unconsciousness.$</string>
 						</regexCodeList>
 						<regexCodePropertyList>
+							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
@@ -22445,7 +22595,8 @@ end</script>
 					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 						<name>asleep</name>
 						<script>if matches[2] == snd.target then
- snd.target_got("asleep")
+  snd.target_got("asleep")
+  snd.target_got("fallen")
 end</script>
 						<triggerType>0</triggerType>
 						<conditonLineDelta>0</conditonLineDelta>
@@ -22459,8 +22610,10 @@ end</script>
 						<colorTriggerBgColor>#000000</colorTriggerBgColor>
 						<regexCodeList>
 							<string>^(\w+)'s? eyes close suddenly as \w+ falls asleep\.$</string>
+							<string>^(\w+) gives in to exhaustion, drifting off to sleep\.$</string>
 						</regexCodeList>
 						<regexCodePropertyList>
+							<integer>1</integer>
 							<integer>1</integer>
 						</regexCodePropertyList>
 					</Trigger>
@@ -24769,12 +24922,10 @@ snd.runemarkMajor = matches[3]</script>
 								<regexCodeList>
 									<string>^You have a (\w+) minor rune painted upon a (\w+) major rune.$</string>
 									<string>^You quickly inscribe a (\w+) rune upon a (\w+) rune on yourself with ink.$</string>
-									<string>You paint yourself with the greater mark of the tentacle then daub the lesser mark of the tentacle upon it.</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
 									<integer>1</integer>
-									<integer>0</integer>
 								</regexCodePropertyList>
 							</Trigger>
 							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -24799,7 +24950,7 @@ snd.runemarkMajor = daubMap[matches.major]</script>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
-									<integer>0</integer>
+									<integer>1</integer>
 								</regexCodePropertyList>
 							</Trigger>
 						</TriggerGroup>
@@ -40463,7 +40614,7 @@ end</script>
 								<name>Group Affs - Used to lock someone in place</name>
 								<script>-- The purpose of this is to lock someone down with disrupt so they cannot use lock-breakers to escape.
 if snd.class == "Luminary" then
-  snd.giving_shield = {"sight", "paresis", "weariness", "confusion", "writhe_transfix", "asthma", "berserking"}
+  snd.giving_shield = {"sight", "paresis", "weariness", "confusion", "writhe_transfix", "asthma", "misery"}
   snd.giving_battle = {"impatience", "stupidity", "sensitivity", "self_pity", "vertigo"}
   snd.giving_chasten = {"hypochondria", "stupidity", "recklessness", "lethargy", "masochism", "dementia", "paranoia", "anorexia",}
   snd.starting_attack()
@@ -40545,7 +40696,7 @@ if snd.class == "Luminary" then
       --Add shield/evoke/perform attacks
       string = string .. shield .. " " .. snd.target .. snd.sep
       --Add chasten choice
-      if not shield:find("slam") or shield:find("transfix") or shield:find("dazzle") or shield:find("crash") then
+      if not (shield:find("slam") or shield:find("transfix") or shield:find("dazzle") or shield:find("crash") or shield:find("facesmash")) then
         if chasten == "none" then
           string = string .. "chasten " .. snd.target
         else
@@ -46365,7 +46516,7 @@ function snd.attack_function()
   end
   if spur ~= "none" then
    if snd.toggles.affcalling and not snd.target_gone then
-	  string = "wt Spur "..snd.target..": "..battle..snd.sep
+	  string = "wt Spur "..snd.target..": "..spur..snd.sep
 	 end
    string = string.."osso spur "..spur.." "..snd.target..snd.sep
   end
@@ -46754,7 +46905,7 @@ end</script>
         if
           not snd.checkAff(snd.giving_subdue[i]) and
           subdue == "none" and
-          snd.giving_subdue[i] ~= battle
+          snd.giving_subdue[i] ~= spur
         then
           subdue = snd.giving_subdue[i]
         end
@@ -52497,7 +52648,12 @@ torso = 0,
 
 snd.parrying = snd.parrying or "none"
 snd.pipes_lit = snd.pipes_lit or false
-snd.emptypipe = snd.emptypipe or "none"
+snd.emptypipes = snd.emptypipes or
+{
+  willow = false,
+  yarrow = false,
+  reishi = false,
+}
 snd.smokedpipe = snd.smokedpipe or "none"
 
 snd.sent = {
@@ -54134,10 +54290,18 @@ end</script>
 						<packageName></packageName>
 						<script>function snd.core()
 
-  if snd.toggles.active and snd.emptypipe ~= "none" and not snd.waiting.lighting and snd.can_cast() then
-    snd.send("outc " .. snd.emptypipe .. snd.sep .. "put " .. snd.emptypipe .. " in emptypipe")
-    snd.waiting.lighting = true
-    tempTimer(snd.delay(), [[snd.waiting.lighting = false]])
+  if snd.toggles.active and not snd.waiting.lighting and snd.can_cast() and snd.not_aff("perplexed") and snd.not_aff("paresis") then
+    local commandSent = false
+    for pipe, isEmpty in pairs(snd.emptypipes) do
+      if isEmpty then
+        snd.send("outc " .. pipe .. snd.sep .. "put " .. pipe .. " in emptypipe")
+        commandSent = true
+      end
+    end
+    if commandSent then
+      snd.waiting.lighting = true
+      tempTimer(snd.delay(), [[snd.waiting.lighting = false]])
+    end
   end
   
   snd.def_check()
@@ -54164,8 +54328,8 @@ snd.priorities =
   {
     "lighting",
     "def_speed",
-    "aff_prone",
-    "aff_adder_tarot",
+    -- "aff_prone",
+    -- "aff_adder_tarot",
     
     "fitness",
     "shrugging",
@@ -54185,22 +54349,22 @@ snd.priorities =
 
     "attack",
     
-    "aff_bleeding",
-    "aff_voyria",
+    -- "aff_bleeding",
+    -- "aff_voyria",
     "def_spheres",
     "def_earthenform",
     "def_permafrost",
     "def_focalmark",
-    "aff_health_10",
-    "aff_health_35",
-    "aff_health_55",
-    "aff_health_low",
-    "aff_health_75",
-    "aff_mana_10",
-    "aff_mana_35",
-    "aff_mana_55",
-    "aff_mana_low",
-    "aff_mana_75",
+    -- "aff_health_10",
+    -- "aff_health_35",
+    -- "aff_health_55",
+    -- "aff_health_low",
+    -- "aff_health_75",
+    -- "aff_mana_10",
+    -- "aff_mana_35",
+    -- "aff_mana_55",
+    -- "aff_mana_low",
+    -- "aff_mana_75",
     "def_chameleon",
     
     "loot",
@@ -54209,187 +54373,187 @@ snd.priorities =
     "bashing",
     "moving",
     
-    "aff_aeon",
-    "aff_paralysis",
-    "aff_paresis",
-    "aff_mirroring",
-    "aff_crippled_body",
-    "aff_crippled",
-    "aff_heartflutter",
-    "aff_slough",
-    "def_firefly_tattoo",
-    "aff_rot_body",
-    "aff_rot_wither",
-    "aff_baldness",
-    "aff_clumsiness",
-    "aff_hypochondria",
-    "aff_weariness",
-    "aff_asthma",
-    "aff_sensitivity",
-    "aff_blood_poison",
-    "aff_limp_veins",
-    "aff_slickness",
-    "aff_disfigurement",
-    "aff_squelched",
-    "aff_migraine",
-    "aff_self-pity",
-    "aff_stupidity",
-    "aff_dizziness",
-    "aff_shyness",
-    "aff_epilepsy",
-    "aff_impatience",
-    "aff_dissonance",
-    "aff_infested",
-    "aff_itchy",
-    "aff_rot_heat",
-    "aff_rot_spirit",
-    "aff_accursed",
-    "aff_agony",
-    "aff_body_odor",
-    "aff_haemophilia",
-    "aff_mental_disruption",
-    "aff_physical_disruption",
-    "aff_allergies",
-    "aff_vomiting",
-    "aff_thin_blood",
-    "aff_rend",
-    "aff_lethargy",
-    "aff_ringing_ears",
-    "aff_addiction",
-    "aff_exhausted",
-    "aff_hubris",
-    "aff_pacifism",
-    "aff_peace",
-    "aff_lovers_effect",
-    "aff_superstition",
-    "aff_generosity",
-    "aff_justice",
-    "aff_egocentric",
-    "aff_commitment_fear",
-    "aff_recklessness",
-    "aff_masochism",
-    "aff_agoraphobia",
-    "aff_loneliness",
-    "aff_berserking",
-    "aff_vertigo",
-    "aff_claustrophobia",
-    "aff_nyctophobia",
-    "aff_sadness",
-    "aff_confusion",
-    "aff_dementia",
-    "aff_hallucinations",
-    "aff_paranoia",
-    "aff_hypersomnia",
-    "aff_hatred",
-    "aff_blood_curse",
-    "aff_blighted",
-    "aff_plodding",
-    "aff_idiocy",
-    "aff_withering",
-    "aff_hellsight",
-    "aff_deadening",
-    "aff_anorexia",
-    "aff_head_mangled",
-    "aff_head_broken",
-    "aff_head_bruised_critical",
-    "aff_head_bruised_moderate",
-    "aff_head_bruised",
-    "aff_destroyed_throat",
-    "aff_left_arm_amputated",
-    "aff_left_arm_mangled",
-    "aff_left_arm_broken",
-    "aff_right_arm_amputated",
-    "aff_right_arm_mangled",
-    "aff_right_arm_broken",
-    "aff_left_arm_crippled",
-    "aff_right_arm_crippled",
-    "aff_left_arm_bruised_critical",
-    "aff_left_arm_bruised_moderate",
-    "aff_crushed_elbows",
-    "aff_left_arm_bruised",
-    "aff_left_arm_dislocated",
-    "aff_right_arm_bruised_critical",
-    "aff_right_arm_bruised_moderate",
-    "aff_right_arm_bruised",
-    "aff_right_arm_dislocated",
-    "aff_crippled_arm",
-    "aff_left_leg_amputated",
-    "aff_left_leg_mangled",
-    "aff_left_leg_broken",
-    "aff_right_leg_amputated",
-    "aff_right_leg_mangled",
-    "aff_right_leg_broken",
-    "aff_left_leg_bruised_critical",
-    "aff_right_leg_bruised_critical",
-    "aff_left_leg_crippled",
-    "aff_right_leg_crippled",
-    "aff_left_leg_bruised_moderate",
-    "aff_left_leg_bruised",
-    "aff_left_leg_dislocated",
-    "aff_right_leg_bruised_moderate",
-    "aff_crippled_leg",
-    "aff_right_leg_bruised",
-    "aff_crushed_kneecaps",
-    "aff_right_leg_dislocated",
-    "aff_crushed_chest",
-    "aff_voidgaze",
-    "aff_torso_mangled",
-    "aff_torso_broken",
-    "aff_torso_bruised_critical",
-    "aff_heatspear",
-    "aff_cracked_ribs",
-    "aff_torso_bruised_moderate",
-    "aff_torso_bruised",
-    "aff_spinal_rip",
-    "aff_selarnia",
-    "aff_mauled_face",
-    "aff_burnt_skin",
-    "aff_collapsed_lung",
-    "aff_ablaze",
-    "aff_crippled_throat",
-    "aff_throatclaw",
-    "aff_smashed_throat",
-    "aff_deepwound",
-    "aff_lightwound",
-    "aff_pre_restore_head",
-    "aff_pre_restore_left_arm",
-    "aff_pre_restore_left_leg",
-    "aff_pre_restore_right_arm",
-    "aff_pre_restore_right_leg",
-    "aff_pre_restore_torso",
-    "aff_gorged",
-    "aff_effused_blood",
-    "aff_indifference",
-    "aff_stuttering",
-    "aff_blurry_vision",
-    "aff_burnt_eyes",
-    "aff_gloom",
-    "aff_rot_benign",
-    "aff_frozen",
-    "aff_shivering",
-    "aff_disrupted",
-    "aff_fear",
-    "aff_premonition",
-    "aff_vinethorns",
-    "aff_void",
-    "aff_weakvoid",
-    "aff_grappled",
-    "aff_writhe_armpitlock",
-    "aff_writhe_bind",
-    "aff_writhe_grappled",
-    "aff_writhe_gunk",
-    "aff_writhe_hoist",
-    "aff_writhe_impaled",
-    "aff_writhe_lure",
-    "aff_writhe_necklock",
-    "aff_writhe_ropes",
-    "aff_writhe_tar",
-    "aff_writhe_thighlock",
-    "aff_writhe_transfix",
-    "aff_writhe_vines",
-    "aff_writhe_web",
-    "aff_dazed",
-    "aff_embedded_axe",
+    -- "aff_aeon",
+    -- "aff_paralysis",
+    -- "aff_paresis",
+    -- "aff_mirroring",
+    -- "aff_crippled_body",
+    -- "aff_crippled",
+    -- "aff_heartflutter",
+    -- "aff_slough",
+    -- "def_firefly_tattoo",
+    -- "aff_rot_body",
+    -- "aff_rot_wither",
+    -- "aff_baldness",
+    -- "aff_clumsiness",
+    -- "aff_hypochondria",
+    -- "aff_weariness",
+    -- "aff_asthma",
+    -- "aff_sensitivity",
+    -- "aff_blood_poison",
+    -- "aff_limp_veins",
+    -- "aff_slickness",
+    -- "aff_disfigurement",
+    -- "aff_squelched",
+    -- "aff_migraine",
+    -- "aff_self-pity",
+    -- "aff_stupidity",
+    -- "aff_dizziness",
+    -- "aff_shyness",
+    -- "aff_epilepsy",
+    -- "aff_impatience",
+    -- "aff_dissonance",
+    -- "aff_infested",
+    -- "aff_itchy",
+    -- "aff_rot_heat",
+    -- "aff_rot_spirit",
+    -- "aff_accursed",
+    -- "aff_agony",
+    -- "aff_body_odor",
+    -- "aff_haemophilia",
+    -- "aff_mental_disruption",
+    -- "aff_physical_disruption",
+    -- "aff_allergies",
+    -- "aff_vomiting",
+    -- "aff_thin_blood",
+    -- "aff_rend",
+    -- "aff_lethargy",
+    -- "aff_ringing_ears",
+    -- "aff_addiction",
+    -- "aff_exhausted",
+    -- "aff_hubris",
+    -- "aff_pacifism",
+    -- "aff_peace",
+    -- "aff_lovers_effect",
+    -- "aff_superstition",
+    -- "aff_generosity",
+    -- "aff_justice",
+    -- "aff_egocentric",
+    -- "aff_commitment_fear",
+    -- "aff_recklessness",
+    -- "aff_masochism",
+    -- "aff_agoraphobia",
+    -- "aff_loneliness",
+    -- "aff_berserking",
+    -- "aff_vertigo",
+    -- "aff_claustrophobia",
+    -- "aff_nyctophobia",
+    -- "aff_sadness",
+    -- "aff_confusion",
+    -- "aff_dementia",
+    -- "aff_hallucinations",
+    -- "aff_paranoia",
+    -- "aff_hypersomnia",
+    -- "aff_hatred",
+    -- "aff_blood_curse",
+    -- "aff_blighted",
+    -- "aff_plodding",
+    -- "aff_idiocy",
+    -- "aff_withering",
+    -- "aff_hellsight",
+    -- "aff_deadening",
+    -- "aff_anorexia",
+    -- "aff_head_mangled",
+    -- "aff_head_broken",
+    -- "aff_head_bruised_critical",
+    -- "aff_head_bruised_moderate",
+    -- "aff_head_bruised",
+    -- "aff_destroyed_throat",
+    -- "aff_left_arm_amputated",
+    -- "aff_left_arm_mangled",
+    -- "aff_left_arm_broken",
+    -- "aff_right_arm_amputated",
+    -- "aff_right_arm_mangled",
+    -- "aff_right_arm_broken",
+    -- "aff_left_arm_crippled",
+    -- "aff_right_arm_crippled",
+    -- "aff_left_arm_bruised_critical",
+    -- "aff_left_arm_bruised_moderate",
+    -- "aff_crushed_elbows",
+    -- "aff_left_arm_bruised",
+    -- "aff_left_arm_dislocated",
+    -- "aff_right_arm_bruised_critical",
+    -- "aff_right_arm_bruised_moderate",
+    -- "aff_right_arm_bruised",
+    -- "aff_right_arm_dislocated",
+    -- "aff_crippled_arm",
+    -- "aff_left_leg_amputated",
+    -- "aff_left_leg_mangled",
+    -- "aff_left_leg_broken",
+    -- "aff_right_leg_amputated",
+    -- "aff_right_leg_mangled",
+    -- "aff_right_leg_broken",
+    -- "aff_left_leg_bruised_critical",
+    -- "aff_right_leg_bruised_critical",
+    -- "aff_left_leg_crippled",
+    -- "aff_right_leg_crippled",
+    -- "aff_left_leg_bruised_moderate",
+    -- "aff_left_leg_bruised",
+    -- "aff_left_leg_dislocated",
+    -- "aff_right_leg_bruised_moderate",
+    -- "aff_crippled_leg",
+    -- "aff_right_leg_bruised",
+    -- "aff_crushed_kneecaps",
+    -- "aff_right_leg_dislocated",
+    -- "aff_crushed_chest",
+    -- "aff_voidgaze",
+    -- "aff_torso_mangled",
+    -- "aff_torso_broken",
+    -- "aff_torso_bruised_critical",
+    -- "aff_heatspear",
+    -- "aff_cracked_ribs",
+    -- "aff_torso_bruised_moderate",
+    -- "aff_torso_bruised",
+    -- "aff_spinal_rip",
+    -- "aff_selarnia",
+    -- "aff_mauled_face",
+    -- "aff_burnt_skin",
+    -- "aff_collapsed_lung",
+    -- "aff_ablaze",
+    -- "aff_crippled_throat",
+    -- "aff_throatclaw",
+    -- "aff_smashed_throat",
+    -- "aff_deepwound",
+    -- "aff_lightwound",
+    -- "aff_pre_restore_head",
+    -- "aff_pre_restore_left_arm",
+    -- "aff_pre_restore_left_leg",
+    -- "aff_pre_restore_right_arm",
+    -- "aff_pre_restore_right_leg",
+    -- "aff_pre_restore_torso",
+    -- "aff_gorged",
+    -- "aff_effused_blood",
+    -- "aff_indifference",
+    -- "aff_stuttering",
+    -- "aff_blurry_vision",
+    -- "aff_burnt_eyes",
+    -- "aff_gloom",
+    -- "aff_rot_benign",
+    -- "aff_frozen",
+    -- "aff_shivering",
+    -- "aff_disrupted",
+    -- "aff_fear",
+    -- "aff_premonition",
+    -- "aff_vinethorns",
+    -- "aff_void",
+    -- "aff_weakvoid",
+    -- "aff_grappled",
+    -- "aff_writhe_armpitlock",
+    -- "aff_writhe_bind",
+    -- "aff_writhe_grappled",
+    -- "aff_writhe_gunk",
+    -- "aff_writhe_hoist",
+    -- "aff_writhe_impaled",
+    -- "aff_writhe_lure",
+    -- "aff_writhe_necklock",
+    -- "aff_writhe_ropes",
+    -- "aff_writhe_tar",
+    -- "aff_writhe_thighlock",
+    -- "aff_writhe_transfix",
+    -- "aff_writhe_vines",
+    -- "aff_writhe_web",
+    -- "aff_dazed",
+    -- "aff_embedded_axe",
     
     "def_gripping",
     "def_vigor",
@@ -55412,7 +55576,6 @@ aff_debilitated = {state = "healed", effect = "", cures = {}, assess = false, ti
 aff_inhibited = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
 
 --Earthcaller
-aff_aftershocks = {state = "healed", effect = "gain affs if earthcaller seismicity hits you", cures = {}, assess = false, timer = createStopWatch()},
 aff_faulted = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
 
 --octopus
@@ -70242,7 +70405,7 @@ function snd.syssin_bash()
       battack = "backstab "..snd.bashing.target
 	 	else
       if hasSkill("Quickwield") then
-        battack = "quickwield right dirk"..snd.sep.."backstab "..snd.bashing.target
+        battack = "quickwield left dirk"..snd.sep.."backstab "..snd.bashing.target
       else
         battack = "wield dirk"
       end
@@ -73830,9 +73993,12 @@ function snd.attack(attack)
   if snd.toggles.parrying and snd.toparry ~= "none" and snd.toparry ~= snd.parrying then
     string = "parry " .. snd.toparry .. snd.sep .. string
   end
-  if snd.emptypipe ~= "none" then
-    string ="outc " ..snd.emptypipe ..snd.sep .."put " ..snd.emptypipe .." in emptypipe"..snd.sep ..string
+  for pipe, isEmpty in pairs(snd.emptypipes) do
+    if isEmpty then
+        string ="outc " .. pipe ..snd.sep .."put " .. pipe .." in emptypipe"..snd.sep ..string
+    end
   end
+
   if not snd.pipes_lit and snd.toggles.lighting then
     string = "light pipes" .. snd.sep .. string
   end
@@ -75325,10 +75491,12 @@ end</script>
                     snd.target_got("stormbolt_cloud")
                   end
                 end,
-    Sporulation = function(target)
-    --This never shows boosted message.
+    Sporulation = function(target, boosted)
                 snd.target_got("impatience")
                 snd.target_got("confusion")
+                  if boosted then
+                    snd.target_got("hallucinations")
+                  end
               end,
     Effusion = function(target)
                 snd.target_got("sight")
@@ -75922,6 +76090,10 @@ end</script>
               snd.used.shield = true
              end,
     Curse = function(target)
+              if not snd.checkAff("slough") then
+                if snd.sloughTimer then killTimer(snd.sloughTimer) end
+                snd.sloughTimer = tempTimer(16, function() snd.target_cured("slough") end)
+              end
               snd.target_got("slough")
             end,
     Scourge = function(target, where)
@@ -76085,6 +76257,10 @@ end</script>
               snd.used.shield = true
              end,
     Terrors = function(target)
+              if not snd.checkAff("slough") then
+                if snd.sloughTimer then killTimer(snd.sloughTimer) end
+                snd.sloughTimer = tempTimer(16, function() snd.target_cured("slough") end)
+              end
               snd.target_got("slough")
             end,
     Unseen = function(target, where)
@@ -77482,10 +77658,12 @@ end</script>
                   snd.target_got("stormbolt_cloud")
                 end
               end,
-    Neurotic = function(target) --0 expert
-    --This never shows boosted message.
+    Neurotic = function(target, boosted)
                 snd.target_got("impatience")
                 snd.target_got("confusion")
+                  if boosted then
+                    snd.target_got("hallucinations")
+                  end
               end,
     Rousing = function(target) --33 fabled
                 snd.target_got("sight")
