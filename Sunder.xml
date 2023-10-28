@@ -20696,8 +20696,10 @@ end
 									<string>^\w+ uses? Desiccation Desert\.$</string>
 									<string>^A cascade of sand flows in from the \w+, settling over the surroundings\.$</string>
 									<string>^A swirling cloud of dust and sand sweeps in from the \w+, blanketing the area with a layer of sand\.$</string>
+									<string>^A wave of magical sand surges in from the \w+ and settles into the surroundings\.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
+									<integer>1</integer>
 									<integer>1</integer>
 									<integer>1</integer>
 									<integer>1</integer>
@@ -20723,11 +20725,13 @@ end</script>
 								<regexCodeList>
 									<string>There is not enough sand present in this location.</string>
 									<string>The sand pervading this area blows away as the magics controlling it disperse.</string>
-									<string>^\w+ uses? Desiccation Whirl\.$</string>
+									<string>^\w+ uses? Desiccation (Whirl|Meld)\.$</string>
+									<string>^\w+ uses? Desiccation Wave</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>3</integer>
 									<integer>3</integer>
+									<integer>1</integer>
 									<integer>1</integer>
 								</regexCodePropertyList>
 							</Trigger>
@@ -20751,13 +20755,19 @@ end
 								<regexCodeList>
 									<string>^\w+ uses? Inundation Inundate\.$</string>
 									<string>^\w+ uses? Inundation Fogbank\.$</string>
+									<string>^A wave of impenetrable fog sweeps in from the \w+\.$</string>
+									<string>^Rolling in from the \w+, thick waves of magical fog settle over the surroundings in an icy pall\.$</string>
+									<string>^Waves of freezing fog roll in from the \w+, the spectral form of an eldritch apparition aglow in its depths\.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
 									<integer>1</integer>
+									<integer>1</integer>
+									<integer>1</integer>
+									<integer>1</integer>
 								</regexCodePropertyList>
 							</Trigger>
-							<Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 								<name>Fog gone</name>
 								<script>local index = table.index_of(gmcp.Room.Info.details,"fogged")
 if index then 
@@ -20773,8 +20783,20 @@ end</script>
 								<mSoundFile></mSoundFile>
 								<colorTriggerFgColor>#000000</colorTriggerFgColor>
 								<colorTriggerBgColor>#000000</colorTriggerBgColor>
-								<regexCodeList />
-								<regexCodePropertyList />
+								<regexCodeList>
+									<string>There is no thick fog inundating this location.</string>
+									<string>You relax your will on the surrounding fog and it dissipates in a swath of harmless plumes.</string>
+									<string>Bereft of any remaining magics, the thick fog inundating the area blows away on a cold breeze.</string>
+									<string>^\w+ uses? Inundation (Gyre|Subsume)\.$</string>
+									<string>^\w+ uses? Inundation Ebb</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>3</integer>
+									<integer>3</integer>
+									<integer>3</integer>
+									<integer>1</integer>
+									<integer>1</integer>
+								</regexCodePropertyList>
 							</Trigger>
 						</TriggerGroup>
 						<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
