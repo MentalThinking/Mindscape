@@ -42,6 +42,10 @@ if snd.offense_loaded then
   snd.chasten_aff = "none"
   snd.last_cured = ""
   snd.rebounded = false
+  
+  if snd.last_hit_limb and snd.last_hit_limb~="none" then
+    snd.last_struck_limb = snd.last_hit_limb
+  end
   if snd.toggles.alerts then
     snd.run_alerts()
   end
@@ -946,14 +950,34 @@ enableTrigger("What tattoos you rockin'?")</script>
 									<script>
 
 local possible_skills = {
-  "Cloak",
-  "Chameleon",
-  "Mindseye",
   "Firefly",
-  "Flame",
+  "Moss",
+  "Feather",
   "Shield",
-  "Hourglass",
+  "Mindseye",
+  "Hammer",
+  "Cloak",
+  "Bell",
+  "Crystal",
+  "Wand",
+  "Moon",
+  "Cloud",
+  "Starburst",
+  "Armour",
+  "Boar",
+  "Flower",
   "Web",
+  "Tentacle",
+  "Flame",
+  "Hourglass",
+  "Owl",
+  "Brazier",
+  "Prism",
+  "Anchor",
+  "Book",
+  "Tree",
+  "Mountain",
+  "Chameleon",
 }
 
 for _, v in pairs(possible_skills) do
@@ -996,6 +1020,30 @@ end</script>
 									</regexCodeList>
 									<regexCodePropertyList>
 										<integer>7</integer>
+									</regexCodePropertyList>
+								</Trigger>
+								<Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+									<name>Tattoo used up</name>
+									<script>local index = table.index_of(snd.skills.tattoos_on_me, matches[2]:title().."Tattoo")
+if index then
+  table.remove(snd.skills.tattoos_on_me, index)
+end
+--Leaving this turned off - I don't have a good way to repopulate a tattoo when it's inked on you. :(</script>
+									<triggerType>0</triggerType>
+									<conditonLineDelta>0</conditonLineDelta>
+									<mStayOpen>0</mStayOpen>
+									<mCommand></mCommand>
+									<packageName></packageName>
+									<mFgColor>#ff0000</mFgColor>
+									<mBgColor>#ffff00</mBgColor>
+									<mSoundFile></mSoundFile>
+									<colorTriggerFgColor>#000000</colorTriggerFgColor>
+									<colorTriggerBgColor>#000000</colorTriggerBgColor>
+									<regexCodeList>
+										<string>^A (\w+) tattoo fades from view and disappears\.$</string>
+									</regexCodeList>
+									<regexCodePropertyList>
+										<integer>1</integer>
 									</regexCodePropertyList>
 								</Trigger>
 							</TriggerGroup>
@@ -6988,7 +7036,10 @@ disableTrigger("Sunder Rebounding")
 disableTrigger("Monk Hit Tracking")
 snd.last_affs = {}
 snd.last_limb_dmg = 0
-snd.last_hit_limb = "none"
+if snd.last_hit_limb and snd.last_hit_limb~="none" then
+  snd.last_struck_limb = snd.last_hit_limb
+  snd.last_hit_limb = "none"
+end
 snd.using_both_hands = 0
 snd.skill_being_used = ""
 </script>
@@ -7237,7 +7288,10 @@ disableTrigger("Sunder Rebounding")
 disableTrigger("Monk Hit Tracking")
 snd.last_affs = {}
 snd.last_limb_dmg = 0
-snd.last_hit_limb = "none"
+if snd.last_hit_limb and snd.last_hit_limb~="none" then
+  snd.last_struck_limb = snd.last_hit_limb
+  snd.last_hit_limb = "none"
+end
 snd.using_both_hands = 0
 snd.skill_being_used = ""
 
@@ -12089,6 +12143,28 @@ end</script>
 								<colorTriggerBgColor>#000000</colorTriggerBgColor>
 								<regexCodeList>
 									<string>^(\w+)'s mental state is overwhelmed as .+ revels in .+ burgeoning emotions.$</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Oblivion broken transfix</name>
+								<script>if matches[2] == snd.target then
+  snd.target_got("writhe_transfix")
+end</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>0</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>^The haunting melody of the song lashes out against (\w+), entrapping \w+ in its slowly weakening hold\.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
@@ -22536,8 +22612,10 @@ end</script>
 							<string>^(\w+) appears dizzy and falls to the ground\.$</string>
 							<string>^(\w+) is already fallen upon the ground\.$</string>
 							<string>^With a struggle, (\w+) attempts to call upon \w+ willpower reserves, however the effort leaves \w+ looking dizzy and weak. \w+ eyes quickly grow unfocused and .+ sways? slightly before crashing heavily to the ground, and \w+ quickly slips into unconsciousness.$</string>
+							<string>^A blow knocks (\w+)'s? balance too far from the balls of \w+ feet, bringing \w+ crashing to the ground\.$</string>
 						</regexCodeList>
 						<regexCodePropertyList>
+							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
@@ -48367,7 +48445,7 @@ function snd.attack_function()
 			if snd.used.shield and snd.used.rebounding then
 				string = "deceive "..snd.target.." wasi"
       elseif snd.used.shield or snd.used.rebounding then
-				string = "deceive "..snd.target..snd.rev_empower(tohit[1])
+				string = "deceive "..snd.target.." "..snd.rev_empower(tohit[1])
 				call = "wt Afflicting "..snd.target..": "..tohit[1]..snd.sep
 			elseif vorpal and not snd.target_locked() and #missing &gt; 2 then
 				string = "blade scribe right atdum "..snd.target.." "..snd.rev_empower(tohit[1])..snd.sep.."dpl "..snd.target.." "..snd.rev_empower(tohit[3]).." "..snd.rev_empower(tohit[2])
@@ -48456,7 +48534,7 @@ end</script>
   			if snd.used.shield and snd.used.rebounding then
   				string = "deceive "..snd.target.." wasi"
         elseif snd.used.shield or snd.used.rebounding then
-  				string = "deceive "..snd.target..snd.rev_empower(tohit[1])
+  				string = "deceive "..snd.target.." "..snd.rev_empower(tohit[1])
   				call = "wt Afflicting "..snd.target..": "..tohit[1]..snd.sep
   			elseif telvi then
   				string = "blade scribe right telvi "..snd.target..snd.sep.."blade scribe left telvi "..snd.target..snd.sep.."dpl "..snd.target.." "..snd.rev_empower(tohit[2]).." "..snd.rev_empower(tohit[1])
@@ -48557,7 +48635,7 @@ if snd.class == "Revenant" then
   			if snd.used.shield and snd.used.rebounding then
   				string = "deceive "..snd.target.." wasi"
         elseif snd.used.shield or snd.used.rebounding then
-  				string = "deceive "..snd.target..snd.rev_empower(tohit[1])
+  				string = "deceive "..snd.target.." "..snd.rev_empower(tohit[1])
   				call = "wt Afflicting "..snd.target..": "..tohit[1]..snd.sep
   			elseif atdum then -- vorpal equiv
   				string = "blade scribe right atdum "..snd.target.." "..snd.rev_empower(tohit[1])..snd.sep.."dpl "..snd.target.." "..snd.rev_empower(tohit[3]).." "..snd.rev_empower(tohit[2])
@@ -48647,7 +48725,7 @@ end
   			if snd.used.shield and snd.used.rebounding then
   				string = "deceive "..snd.target.." wasi"
         elseif snd.used.shield or snd.used.rebounding then
-  				string = "deceive "..snd.target..snd.rev_empower(tohit[1])
+  				string = "deceive "..snd.target.." "..snd.rev_empower(tohit[1])
   				call = "wt Afflicting "..snd.target..": "..tohit[1]..snd.sep
   			else
   				string = "dpl "..snd.target.." "..snd.rev_empower(tohit[2]).." "..snd.rev_empower(tohit[1])
@@ -55622,6 +55700,43 @@ aff_mystified = {state = "healed", effect = "stuck prone for a bit via voidgaze"
 --barbed arrow, ouch!
 aff_barbed_arrow = {state = "healed", effect = "10 stacks kills", cures = {balanceequilibriumtake = "pull arrow from body"}, assess = false, timer = createStopWatch()},
 
+--Soulbound from elite mobs
+aff_soulbound = {state = "healed", effect = "You gotta run away a bit to cure it", cures = {}, assess = false, timer = createStopWatch()},
+aff_infernal_explosion = {state = "healed", effect = "You're going to EXPLODE", cures = {}, assess = false, timer = createStopWatch()},
+
+--bulk adding missing affs from afflict list
+aff_backbreak = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_battlelust = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_blackstar = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_bowelgore = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_burden = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_city_hatred = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_dread = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_etherflux = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_hobbled = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_internal_disarray = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_lightheart = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_manabarbs = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_mindclamped = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_misfortune = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_possessed = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_spirit_tendril = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_staggered = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_symbol_marked = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_thunderbrand = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_excess_melancholic = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_trickery = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_typhonpoison = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_vacuity = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_varach_rot = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_was_tricked = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_pheromones = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_causality = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_fog_snared = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_remorse = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_contrition = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_fragments = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+
 }
 </script>
 							<eventHandlerList />
@@ -56113,7 +56228,7 @@ def_fortify = {defense = "fortify", type = "normal", effect = "Fortify your body
 def_corpus_warding = {defense = "corpus_warding", type = "normal", effect = "Fortify your body to take less magical damage", balance = {balanceequilibriumtake = "ward"}, state = "down", needit = false, timer = createStopWatch(), skill = "Warding" },
 def_celerity = {defense = "celerity", type = "normal", effect = "Increased movement speed", balance = {balanceequilibriumtake = "celerity"}, state = "down", needit = false, timer = createStopWatch(), skill = "Celerity" },
 def_lifescent = {defense = "lifescent", type = "normal", effect = "Detect nearby prey movements", balance = {balanceequilibriumtake = "lifescent"}, state = "down", needit = false, timer = createStopWatch(), skill = "Lifescent" },
-def_concentrate = {defense = "concentrate", type = "normal", effect = "Make your blood use more efficient", balance = {balanceequilibriumtake = "blood concentrate"}, state = "down", needit = false, timer = createStopWatch(), skill = "Concentration" },
+def_concentrate = {defense = "concentrate", type = "normal", effect = "Make your blood use more efficient", balance = {balanceequilibriumtake = "blood concentrate"}, state = "down", needit = false, timer = createStopWatch(), skill = "Concentration", tree = "Sanguis"},
 def_shadowblow = {defense = "shadowblow", type = "normal", effect = "Your shadow strikes out at your attacker", balance = {balanceequilibriumtake = "blood shadow"}, state = "down", needit = false, timer = createStopWatch(), skill = "Shadow" },
 def_blurred = {defense = "blurred", type = "normal", effect = "Others cannot see your vitals", balance = {balanceequilibriumtake = "blood blur"}, state = "down", needit = false, timer = createStopWatch(), skill = "Blur" },
 def_elusion = {defense = "elusion", type = "normal", effect = "You avoid opponents' blows", balance = {balanceequilibriumtake = "elusion on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Elusion" },
@@ -58514,6 +58629,11 @@ snd.bashing_area_beginning_rooms ={
   ["Mejev Nider Nesve wo Ti, Matati wo Eja sota Aran wo Aransa"] = "74470",
   ["a dimly lit subterranean river"] = "76514",
   ["the Offspring"] = "77437",
+  ["Beggar's Barrow"] = "41261",
+  ["an abandoned hideout of the Red Hands"] = "60651",
+  ["a bandit encampment in the Bonro Sands"] = "60323",
+  ["the Vault of Domor"] = "49047",
+  ["Sunwash Ascent"] = "39167",
 }
 </script>
 						<eventHandlerList />
@@ -58698,6 +58818,12 @@ snd.areas = {
 {area = "a dimly lit subterranean river", level = "99+", targets = {"an iridescent bubble of elemental energies", "a long-finned, cerulean amphibian", "a billowing cloud of shifting luminescence", "a spiny many-armed water elemental", "a tempestuous wave elemental", "a shimmering piscine elemental"}},
 {area = "the Offspring", level = "90+", targets = {"a pudgy water badger", "a flat-snouted scaled sheep", "a chromatic aquatic dragonfly", " a muscular freshwater hound", "a long-tailed bullfrog", "an amphibious, ebon-winged hawk", "a predatory river canine",}},
 {area = "Endless Battlefield", level = "90+", targets = {"a blood-drenched soldier wielding a claymore", "a blood-drenched swordsman", "a blood-drenched spear fighter", "a blood-drenched archer",}},
+{area = "Sunwash Ascent", level = "90", targets = {"a menacing vrukh lurker", "a vrukh clutch-matron", "a grotesque, battle-torn vrukh", "a gnarled, decrepit vrukh", "a vicious, maimed vrukh", "a bald fledgling vrukh", "a disgusting fledgling vrukh",}},
+{area = "Beggar's Barrow", level = "99", targets = {"a wiry Aslinn cutthroat", "a morose Golban outcast", "a lithe Caentoi cutthroat", "an indolent Golban mercenary", "a scrawny Aslinn mercenary", "a bedraggled Caentoi outcast", "a one-legged Aslinn beggar", "a mangy Caentoi beggar",}},
+{area = "an abandoned hideout of the Red Hands", level = "99", targets = {"a malnourished escapee", "a small red scorpion", "a bronze-hued scorpion", "a golden scorpion",}},
+{area = "a bandit encampment in the Bonro Sands", level = "99", targets = {"a Caentoi bushwhacker", "a shifty Caentoi scoundrel", "a burly Caentoi raider", "a grizzled Caentoi highwayman", "a wiry Caentoi bandit", "a Caentoi marauder", "a sly Caentoi vagabond", "a grinning Caentoi cutthroat", "a thieving Caentoi outlaw", "a Caentoi blackguard", "Chief Kess, a Golban marauder",}},
+{area = "the Vault of Domor", level = "99", targets = {"an imposing high cultist", "an emaciated cultist", "a flayed cultist", "a darkly clad cultist", "a splintered skeleton", "a revolting skeleton", "a yellowed skeleton", "a segmented corpse worm", "a large-headed grave worm", "a spiked corpse worm", "a beaked corpse worm",}},
+{area = "the sands of the Grazzin Arena", level = "endurance", targets = {"a hunched Aslinn scout", "an asperous Aslinn woman", "an ivory-masked Aslinn nomad",}},
 }
 
 sunder_areaPaths = {
@@ -69510,6 +69636,243 @@ sunder_areaPaths = {
   v78605 = "76914",
   v81176 = "76734"
 },
+["Beggar's Barrow"] = {
+  v41261 = "41262",
+  v41262 = "41264",
+  v41264 = "41265",
+  v41265 = "41266",
+  v41266 = "41270",
+  v41267 = "41268",
+  v41268 = "41269",
+  v41269 = "41274",
+  v41270 = "41271",
+  v41271 = "41272",
+  v41272 = "41273",
+  v41273 = "41267",
+  v41274 = "41275",
+  v41275 = "41276",
+  v41276 = "41277",
+  v41277 = "41284",
+  v41278 = "41279",
+  v41279 = "41280",
+  v41280 = "41281",
+  v41281 = "41282",
+  v41282 = "41283",
+  v41283 = "41285",
+  v41284 = "41278",
+  v41285 = "41286",
+  v41286 = "41287",
+  v41287 = "41288",
+  v41288 = "41289",
+  v41289 = "41290",
+  v41290 = "41291",
+  v41291 = "41292",
+  v41292 = "41293",
+  v41293 = "41294",
+  v41294 = "41307",
+  v41295 = "41301",
+  v41296 = "41295",
+  v41297 = "41296",
+  v41298 = "41299",
+  v41299 = "41297",
+  v41300 = "41298",
+  v41301 = "41302",
+  v41302 = "41303",
+  v41303 = "41304",
+  v41304 = "41305",
+  v41305 = "41306",
+  v41306 = "ptcity",
+  v41307 = "41308",
+  v41308 = "41309",
+  v41309 = "41310",
+  v41310 = "41311",
+  v41311 = "41300"
+},
+["an abandoned hideout of the Red Hands"] = {
+  v60651 = "60652",
+  v60652 = "60656",
+  v60656 = "60657",
+  v60657 = "60658",
+  v60658 = "60660",
+  v60660 = "60664",
+  v60664 = "60665",
+  v60665 = "60666",
+  v60666 = "60684",
+  v60667 = "60670",
+  v60668 = "ptcity",
+  v60669 = "60668",
+  v60670 = "60672",
+  v60671 = "60679",
+  v60672 = "60677",
+  v60673 = "60674",
+  v60674 = "60675",
+  v60675 = "60671",
+  v60677 = "60678",
+  v60678 = "60673",
+  v60679 = "60680",
+  v60680 = "60682",
+  v60682 = "60683",
+  v60683 = "60669",
+  v60684 = "60685",
+  v60685 = "60667"
+},
+["a bandit encampment in the Bonro Sands"] = {
+  v60211 = "60291",
+  v60290 = "60293",
+  v60291 = "60290",
+  v60292 = "ptcity",
+  v60293 = "60294",
+  v60294 = "60295",
+  v60295 = "60292",
+  v60296 = "60331",
+  v60298 = "60332",
+  v60299 = "60298",
+  v60300 = "60299",
+  v60301 = "60328",
+  v60304 = "60326",
+  v60305 = "60322",
+  v60306 = "60320",
+  v60308 = "60315",
+  v60309 = "60313",
+  v60310 = "60312",
+  v60311 = "60310",
+  v60312 = "60309",
+  v60313 = "60314",
+  v60314 = "60308",
+  v60315 = "60306",
+  v60320 = "60321",
+  v60321 = "60305",
+  v60322 = "60304",
+  v60323 = "60311",
+  v60324 = "60329",
+  v60326 = "60301",
+  v60327 = "60300",
+  v60328 = "60327",
+  v60329 = "60296",
+  v60331 = "60333",
+  v60332 = "60324",
+  v60333 = "60211"
+},
+["the Vault of Domor"] = {
+  v49047 = "49048",
+  v49048 = "75508",
+  v49050 = "49052",
+  v49051 = "49053",
+  v49052 = "49051",
+  v49053 = "49054",
+  v49054 = "49055",
+  v49055 = "49056",
+  v49056 = "49057",
+  v49057 = "49058",
+  v49058 = "49059",
+  v49059 = "49060",
+  v49060 = "49061",
+  v49061 = "49062",
+  v49062 = "49065",
+  v49063 = "49068",
+  v49064 = "49063",
+  v49065 = "49067",
+  v49066 = "49064",
+  v49067 = "49066",
+  v49068 = "49069",
+  v49069 = "49071",
+  v49070 = "49075",
+  v49071 = "49073",
+  v49072 = "49070",
+  v49073 = "49074",
+  v49074 = "49072",
+  v49075 = "49076",
+  v49076 = "49077",
+  v49077 = "49078",
+  v49078 = "49079",
+  v49079 = "49080",
+  v49080 = "49081",
+  v49081 = "49082",
+  v49082 = "49083",
+  v49083 = "49099",
+  v49084 = "49104",
+  v49085 = "49084",
+  v49086 = "49085",
+  v49087 = "49086",
+  v49088 = "49087",
+  v49089 = "49088",
+  v49090 = "49089",
+  v49091 = "49092",
+  v49092 = "49090",
+  v49093 = "49091",
+  v49094 = "49093",
+  v49095 = "49094",
+  v49096 = "49095",
+  v49097 = "49096",
+  v49098 = "49097",
+  v49099 = "49098",
+  v49100 = "49105",
+  v49101 = "49100",
+  v49102 = "49103",
+  v49103 = "49101",
+  v49104 = "49102",
+  v49105 = "49106",
+  v49106 = "49107",
+  v49107 = "49108",
+  v49108 = "49109",
+  v49109 = "49110",
+  v49110 = "49111",
+  v49111 = "49112",
+  v49112 = "49113",
+  v49113 = "49130",
+  v49114 = "49119",
+  v49115 = "49114",
+  v49116 = "49115",
+  v49117 = "49116",
+  v49118 = "ptcity",
+  v49119 = "49120",
+  v49120 = "49121",
+  v49121 = "49118",
+  v49122 = "49117",
+  v49123 = "49124",
+  v49124 = "49125",
+  v49125 = "49122",
+  v49126 = "49123",
+  v49127 = "49126",
+  v49128 = "49127",
+  v49129 = "49128",
+  v49130 = "49129",
+  v75508 = "49050"
+},
+["Sunwash Ascent"] = {
+  v38800 = "38801",
+  v38801 = "38802",
+  v38802 = "38803",
+  v38803 = "38804",
+  v38804 = "38805",
+  v38805 = "39255",
+  v38806 = "38807",
+  v38807 = "38808",
+  v38808 = "38809",
+  v38809 = "38810",
+  v38810 = "39254",
+  v38811 = "38812",
+  v38812 = "38813",
+  v38813 = "39166",
+  v39166 = "ptcity",
+  v39167 = "39168",
+  v39168 = "39169",
+  v39169 = "39245",
+  v39245 = "39246",
+  v39246 = "39247",
+  v39247 = "39248",
+  v39248 = "39249",
+  v39249 = "39250",
+  v39250 = "39251",
+  v39251 = "39252",
+  v39252 = "39253",
+  v39253 = "38806",
+  v39254 = "38800",
+  v39255 = "39256",
+  v39256 = "39257",
+  v39257 = "39258",
+  v39258 = "38811"
+},
 }
 
 </script>
@@ -72873,7 +73236,8 @@ snd.disperse = "none" -- Can be set to none, callers or all.
 
 snd.limbs = {}
 snd.parried_limb = "none"
-snd.last_hit_limb = "none"
+snd.last_hit_limb = "none" --not safe for use in routes.
+snd.last_struck_limb = "none" --this can be used in routes
 snd.last_limb_dmg = 0
 snd.resto_limb = "none"
 snd.current_restoration_aff = ""
@@ -76022,10 +76386,12 @@ end</script>
                  snd.onHit2({"Dodge"})
                end,
     Batter = function(target, where)
-               snd.last_hit_limb = where
-               snd.last_limb_dmg = snd.calcTeradrimLimbDamage("batter")
-               snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
-               snd.onHit2({"Dodge", "Parry", "Rebounding"})
+               if where then 
+                 snd.last_hit_limb = where
+                 snd.last_limb_dmg = snd.calcTeradrimLimbDamage("batter")
+                 snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+                 snd.onHit2({"Dodge", "Parry", "Rebounding"})
+               end
               end,
     Shockwave = function(target)
                   snd.target_got("fallen")
@@ -76183,10 +76549,12 @@ end</script>
                  snd.onHit2({"Dodge"})
                end,
     Clobber = function(target, where)
-               snd.last_hit_limb = where
-               snd.last_limb_dmg = snd.calcTeradrimLimbDamage("clobber")
-               snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
-               snd.onHit2({"Dodge", "Parry", "Rebounding"})
+                if where then
+                 snd.last_hit_limb = where
+                 snd.last_limb_dmg = snd.calcTeradrimLimbDamage("clobber")
+                 snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+                 snd.onHit2({"Dodge", "Parry", "Rebounding"})
+                end
               end,
     Crack = function(target, where)
                snd.last_hit_limb = where
