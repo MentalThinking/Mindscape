@@ -15245,7 +15245,7 @@ end</script>
 								<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 									<name>Crush part 1</name>
 									<script>if matches[2] == snd.target then
-  snd.last_limb_dmg = 2.5
+  snd.last_limb_dmg = 2.49
   snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
   snd.onHit2({"Dodge", "Parry"})
   snd.luminary_crush_first_choice = snd.last_hit_limb
@@ -15270,7 +15270,7 @@ end</script>
 								<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 									<name>Crush part 2</name>
 									<script>if snd.getting_hit == snd.target then
-  local amount = 2.5 --buckler/cavalry is 2.5
+  local amount = 2.49 --buckler/cavalry is 2.49
   if matches[1]:find("tower") or matches[1]:find("kite") then
     amount = 12.5
   elseif matches[1]:find("banded") then
@@ -15282,7 +15282,7 @@ end</script>
   
   --We also need to add the difference to the first attack. Since you don't know what shield they're using until part 2, it's a little wonky.
   if amount &gt; 2.5 and snd.luminary_crush_first_choice then -- already good if it's buckler
-    snd.took_limb_dmg(snd.luminary_crush_first_choice, amount-2.5) -- add the amount minus what we've already given
+    snd.took_limb_dmg(snd.luminary_crush_first_choice, amount-2.49) -- add the amount minus what we've already given
     snd.luminary_crush_first_choice = nil
   end
 end
@@ -29573,7 +29573,7 @@ snd.infiltrate = false
 						<script>if sndNDB.players[gmcp.Char.Status.name].city == sndNDB.players[matches[2]].city then
 else
   snd.send("wt "..matches[2].." is singing Oblivion next to v"..gmcp.Room.Info.num)
-  if snd.class == "Syssin" then
+  if snd.class == "Infiltrator" then
     expandAlias("gs "..matches[2])
   elseif snd.class == "Shaman" or snd.class == "Alchemist" then
     expandAlias("np "..matches[2])
@@ -34179,7 +34179,7 @@ cecho("\n&lt;goldenrod&gt;Limb:")
 cecho("\n &lt;green&gt;ms &lt;white&gt;                - Straight limb breaks into jawlocks.")
 cecho("\n &lt;green&gt;insta&lt;white&gt;              - Goes for quarter kills. Check AB QUARTER for more information.")
 cecho("\n &lt;green&gt;limbs&lt;white&gt;              - Utilizes slash to delay limb breaks, good for pushing level 2 breaks.")
-elseif snd.class == "Syssin" then
+elseif snd.class == "Infiltrator" then
 cecho("\n&lt;goldenrod&gt;Afflictions:")
 cecho("\n &lt;green&gt;ms &lt;white&gt;                - Basic dstab w/venoms. No hypnosis.")
 cecho("\n &lt;green&gt;magic&lt;white&gt;              - More advanced, geared towards magic, uses hypnosis.")
@@ -34692,6 +34692,18 @@ cecho("&lt;red&gt;Your mount's ID has been set to: "..snd.toggles.mount)</script
 						<command></command>
 						<packageName></packageName>
 						<regex>^snd mount (\d+)$</regex>
+					</Alias>
+					<Alias isActive="yes" isFolder="no">
+						<name>Toggle predator Laesan bashing</name>
+						<script>if matches[2] then
+  snd.toggles.laesan = matches[2] == "on"
+else
+  snd.toggles.laesan = not snd.toggles.laesan
+end
+cecho("&lt;red&gt;Will use &lt;orange&gt;"..(snd.toggles.laesan and "Laesan" or "Ein-Fasit") .." &lt;red&gt;while bashing!")</script>
+						<command></command>
+						<packageName></packageName>
+						<regex>^toggle laesan(?: (on|off))?$</regex>
 					</Alias>
 				</AliasGroup>
 				<AliasGroup isActive="yes" isFolder="yes">
@@ -36169,7 +36181,7 @@ end -- end the class if
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>wield bashing</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.send("quickwield left whip"..snd.sep.."quickwield right shield")
 end</script>
 								<command></command>
@@ -36178,7 +36190,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>wield pvp</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.send("quickwield left dirk"..snd.sep.."quickwield right shield")
 end</script>
 								<command></command>
@@ -36201,7 +36213,7 @@ end</script>
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>yank</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 if matches[2] == "" then
  snd.send("qeb quickwield left whip"..snd.sep.."yank "..snd.target)
 else
@@ -36214,7 +36226,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>backstab</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 if matches[2] == "" then
  snd.send("qeb quickwield left dirk"..snd.sep.."backstab "..snd.target.." curare")
 else
@@ -36234,7 +36246,7 @@ end</script>
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>darkflood</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.send("qeb conjure darkflood")
 end</script>
 								<command></command>
@@ -36243,7 +36255,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>abduct</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 if matches[2] == nil then
  snd.send("qeb abduct "..snd.target)
 else
@@ -36256,7 +36268,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>Vortex</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
   if matches[2] == nil then
     snd.send("qeb worm vortex "..snd.target)
   else
@@ -36276,7 +36288,7 @@ end</script>
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>hypnotise</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.send("qeb hypnotise "..snd.target)
 end</script>
 								<command></command>
@@ -36285,7 +36297,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>shadow mark</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.send("qeb shadow mark numbness "..snd.target)
 end</script>
 								<command></command>
@@ -36294,7 +36306,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>hypnotise stack</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.hypno_stack = {
  "hypochondria",
  "clumsiness",
@@ -36346,7 +36358,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>hypnotise magic stack</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.hypno_stack = {
  "hypochondria",
  "clumsiness",
@@ -36398,7 +36410,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>suggest</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 local shorthand = {
 ["clu"] = "clumsiness",
 ["imp"] = "impatience"
@@ -36422,7 +36434,7 @@ end</script>
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>mouse mode</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.starting_attack()
 function snd.attack_function()
 	local string = "" -- this will populate with our attack
@@ -36544,7 +36556,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>legs</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.starting_attack()
 function snd.attack_function()
 	local string = "" -- this will populate with our attack
@@ -36657,7 +36669,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>magic</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.hypno_stack = { -- hypnosis affs, in priority order
  "hypochondria",
  "impatience",
@@ -36834,7 +36846,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>kill</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.hypno_stack = { -- hypnosis affs, in priority order
  "hypochondria",
  "impatience",
@@ -37010,7 +37022,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>1v1</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.hypno_stack = { -- hypnosis affs, in priority order
  "hypochondria",
  "impatience",
@@ -37184,7 +37196,7 @@ end</script>
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>damage</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
 snd.starting_attack()
 function snd.attack_function()
  local string = ""
@@ -37227,7 +37239,7 @@ end</script>
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>snipe</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
   snd.set_queue("secure dirk"..snd.sep.."secure whip"..snd.sep.."wear buckler"..snd.sep.."bowstance"..snd.sep.."switch normal"..snd.sep.."snipe "..snd.target.." "..matches[2])
 end</script>
 								<command></command>
@@ -37236,7 +37248,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>meteor</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
   if matches[2] == nil then
     snd.set_queue("secure dirk"..snd.sep.."secure whip"..snd.sep.."wear buckler"..snd.sep.."bowstance"..snd.sep.."switch meteor"..snd.sep.."shoot "..snd.target.." meteor")
   else
@@ -37249,7 +37261,7 @@ end</script>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>ghost</name>
-								<script>if snd.class == "Syssin" then
+								<script>if snd.class == "Infiltrator" then
   if matches[2] == nil then
     snd.set_queue("secure dirk"..snd.sep.."secure whip"..snd.sep.."wear buckler"..snd.sep.."bowstance"..snd.sep.."switch ghost"..snd.sep.."shoot "..snd.target)
   else
@@ -49967,14 +49979,14 @@ end</script>
 								<script>send("order cholerisk kill "..snd.target)</script>
 								<command></command>
 								<packageName></packageName>
-								<regex>^ock</regex>
+								<regex>^ock$</regex>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>order loyals passive</name>
 								<script>send("order loyals passive")</script>
 								<command></command>
 								<packageName></packageName>
-								<regex>^ocp</regex>
+								<regex>^ocp$</regex>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>Freeze</name>
@@ -50094,7 +50106,7 @@ end</script>
 end</script>
 								<command></command>
 								<packageName></packageName>
-								<regex>^freeze</regex>
+								<regex>^freeze$</regex>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>Damage</name>
@@ -50148,7 +50160,7 @@ snd.attack_function()
 end</script>
 								<command></command>
 								<packageName></packageName>
-								<regex>^dmg</regex>
+								<regex>^dmg$</regex>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>Single Shatter</name>
@@ -50265,7 +50277,7 @@ end</script>
 end</script>
 								<command></command>
 								<packageName></packageName>
-								<regex>^sshatter</regex>
+								<regex>^sshatter$</regex>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>Affs</name>
@@ -50382,7 +50394,7 @@ snd.attack_function()
 end</script>
 								<command></command>
 								<packageName></packageName>
-								<regex>^affs</regex>
+								<regex>^affs$</regex>
 							</Alias>
 							<Alias isActive="yes" isFolder="no">
 								<name>Fire</name>
@@ -50452,7 +50464,7 @@ end</script>
 								<script>send("qeb humour retch "..snd.target..""..snd.sep.."humour retch "..snd.target)</script>
 								<command></command>
 								<packageName></packageName>
-								<regex>^retch</regex>
+								<regex>^retch$</regex>
 							</Alias>
 						</AliasGroup>
 						<AliasGroup isActive="yes" isFolder="yes">
@@ -50463,7 +50475,7 @@ end</script>
 							<regex></regex>
 							<Alias isActive="yes" isFolder="no">
 								<name>Group</name>
-								<script>if snd.class == "Ascendril" then
+								<script>if snd.class == "Bloodborn" then
   snd.starting_attack()
   function snd.attack_function()
     if not snd.waiting.queue then
@@ -50593,7 +50605,7 @@ end</script>
 end</script>
 								<command></command>
 								<packageName></packageName>
-								<regex></regex>
+								<regex>^gaff$</regex>
 							</Alias>
 						</AliasGroup>
 					</AliasGroup>
@@ -52623,6 +52635,7 @@ enrich = false,
 gags = true,
 targetrune = false,
 alerts = false,
+laesan = true, --try to use laesan while predator bashing. If false, will go for Ein-fasit instead.
 ascendedtype = "none",
 mount = "123456",
 }</script>
@@ -53184,8 +53197,8 @@ end</script>
     snd.defenses.def_constitution = snd.alternative_class_defenses.Earthcaller_constitution
   end
   
-  if snd.class == "Syssin" then
-    snd.defenses.def_shroud = snd.alternative_class_defenses.Syssin_shroud
+  if snd.class == "Infiltrator" then
+    snd.defenses.def_shroud = snd.alternative_class_defenses.Infiltrator_shroud
   end
   
   if snd.class == "Carnifex" then
@@ -53939,7 +53952,7 @@ function snd.can_fitness()
 end
 
 function snd.can_shrug()
-  if snd.class == "Syssin" and hasSkill("Shrugging") and snd.balance.shrug then
+  if snd.class == "Infiltrator" and hasSkill("Shrugging") and snd.balance.shrug then
     return true
   else
     return false
@@ -54752,7 +54765,7 @@ snd.priorities =
     "def_nightsight",
     "def_clarity",
     "def_vitality",
-    "def_kaido_regeneration",
+    "def_regeneration",
     "def_constitution",
     "def_split_mind",
     "def_immunity",
@@ -55046,6 +55059,19 @@ snd.priorities =
     "def_anthem",
     "def_rallied",
     "def_bolstered_morale",
+    
+    --predator
+    "def_spacing",
+    "def_masked",
+    "def_trueparry",
+    "def_bladesurge",
+    "def_absorption",
+    "def_secondwind",
+    "def_windwalking",
+    "def_preserval",
+    "def_whitesight",
+    "def_aversion",
+    "def_defang",
   }</script>
 						<eventHandlerList />
 					</Script>
@@ -55657,6 +55683,14 @@ aff_awakened = {state = "healed", effect = "Some bard nonsense", cures = {}, ass
 --ravager thing
 aff_kneel = {state = "healed", effect = "hurts you if you walk too far from ravager", cures = {}, assess = false, timer = createStopWatch()},
 
+--predator
+aff_bloodscourge = {state = "healed", effect = "", cures = {smoke = "todisplay"}, assess = false, timer = createStopWatch()},
+aff_embedded_dagger = {state = "healed", effect = "", cures = {smoke = "todisplay"}, assess = false, timer = createStopWatch()},
+aff_fleshbane = {state = "healed", effect = "", cures = {smoke = "todisplay"}, assess = false, timer = createStopWatch()},
+aff_goaded = {state = "healed", effect = "", cures = {smoke = "todisplay"}, assess = false, timer = createStopWatch()},
+aff_intoxicated = {state = "healed", effect = "", cures = {smoke = "todisplay"}, assess = false, timer = createStopWatch()},
+aff_writhe_dartpinned = {state = "healed", effect = "", cures = {smoke = "todisplay"}, assess = false, timer = createStopWatch()},
+
 ---- Mirror affs here
 
 --Revenant
@@ -56199,7 +56233,7 @@ def_inspiration_constitution = {defense = "inspiration_constitution", type = "no
 
 --Monk
 def_vitality = {defense = "vitality", type = "normal", effect = "You will get a burst of HP when near death", balance = {needyequilibriumtake = "vitality"}, state = "down", needit = false, timer = createStopWatch(), skill = "Vitality"},
-def_kaido_regeneration = {defense = "regeneration", type = "normal", effect = "HP regen", balance = {special = "regeneration on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Regeneration"},
+def_regeneration = {defense = "regeneration", type = "normal", effect = "HP regen", balance = {special = "regeneration on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Regeneration"},
 def_constitution = {defense = "constitution", type = "normal", effect = "Protection from nausea", balance = {needyequilibriumtake = "constitution"}, state = "down", needit = false, timer = createStopWatch(), skill = "Constitution"},
 def_split_mind = {defense = "split_mind", type = "normal", effect = "Constant meditation", balance = {needyequilibriumtake = "split mind"}, state = "down", needit = false, timer = createStopWatch(), skill = "Splitting"},
 def_kaido_immunity = {defense = "kaido_immunity", type = "normal", effect = "You will auto cure the next poison you are hit with", balance = {needyequilibriumtake = "immunity"}, state = "down", needit = false, timer = createStopWatch(), skill = "Immunity"},
@@ -56454,6 +56488,23 @@ def_zenith = {defense = "zenith", type = "normal", effect = "cure a random AFF, 
 def_mindspark = {defense = "mindspark", type = "normal", effect = "raises your intelligence", balance = {balanceequilibrium = "psi mindspark"}, state = "down", needit = false, timer = createStopWatch(), skill = "Mindspark" },
 def_bending = {defense = "bending", type = "normal", effect = "magical damage reduction or something", balance = {balanceequilibrium = "psi bending"}, state = "down", needit = false, timer = createStopWatch(), skill = "Bending"},
 
+--predator
+def_spacing = {defense = "spacing", type = "normal", effect = "Physical audit", balance = {balanceequilibriumtake = "spacing"}, state = "down", needit = false, timer = createStopWatch(), skill = "Spacing"},
+def_masked = {defense = "masked", type = "normal", effect = "Veil-like effect", balance = {balanceequilibrium = "wear mask"}, state = "down", needit = false, timer = createStopWatch(), skill = "Mask"},
+def_trueparry = {defense = "trueparry", type = "normal", effect = "Parry all limbs, channel", balance = {balanceequilibrium = "trueparry"}, state = "down", needit = false, timer = createStopWatch(), skill = "Trueparry"},
+def_bladesurge = {defense = "bladesurge", type = "normal", effect = "Burstheal like vitality, plus extra hit when activated", balance = {balanceequilibriumtake = "bladesurge"}, state = "down", needit = false, timer = createStopWatch(), skill = "Bladesurge"},
+def_bladesurge_energy = {defense = "bladesurge_regeneration", type = "goldenrod", effect = "All knifeplay stances", balance = {}, state = "down", needit = false, timer = createStopWatch(), skill = "Bladesurge"},
+def_absorption = {defense = "absorption", type = "normal", effect = "Burst damage after receiving enough magic based damage", balance = {balanceequilibriumtake = "absorption"}, state = "down", needit = false, timer = createStopWatch(), skill = "Tidalslash"},
+--def_regeneration = {defense = "regeneration", type = "normal", effect = "Regen health", balance = {balanceequilibrium = "regeneration on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Regeneration"},
+--This shares monks' regeneration defense - it's handled in that part of the dictionary.
+def_secondwind = {defense = "secondwind", type = "normal", effect = "Faster wake from sleep", balance = {balanceequilibrium = "secondwind"}, state = "down", needit = false, timer = createStopWatch(), skill = "Secondwind"},
+def_windwalking = {defense = "windwalking", type = "normal", effect = "Avoid area alerts", balance = {balanceequilibriumtake = "windwalk"}, state = "down", needit = false, timer = createStopWatch(), skill = "Windwalk"},
+def_preserval = {defense = "preserval", type = "normal", effect = "Protect against fire/cold", balance = {balanceequilibriumtake = "preservation"}, state = "down", needit = false, timer = createStopWatch(), skill = "Preserval"},
+def_whitesight = {defense = "whitesight", type = "normal", effect = "See through blizzards", balance = {balanceequilibrium = "whitesight"}, state = "down", needit = false, timer = createStopWatch(), skill = "Whitesight"},
+def_aversion = {defense = "aversion", type = "normal", effect = "Avoid aegis and runes, but blocks ql and gmcp map", balance = {balanceequilibrium = "avert eyes"}, state = "down", needit = false, timer = createStopWatch(), skill = "Aversion"},
+def_defang = {defense = "defang", type = "normal", effect = "Knocks offbal if successful parry", balance = {balanceequilibriumtake = "defang"}, state = "down", needit = false, timer = createStopWatch(), skill = "Defang"},
+
+
 --adherent
 def_adherent_form = {defense = "adherent_form", type = "normal", effect = "You are pissed", balance = {balanceequilibriumtake = "ascend soul brutal"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
 def_adherent_barrier = {defense = "adherent_barrier", type = "normal", effect = "Protect you and absorb afflictions", balance = {balanceequilibriumtake = "adherent barrier"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
@@ -56576,7 +56627,7 @@ Indorani_shroud = { defense = "shroud", type = "normal", effect = "Shrouded.",  
 Oneiromancer_shroud = { defense = "shroud", type = "normal", effect = "Shrouded.",  balance = {needybalancetake = "shroud"}, state = "down", needit = false, timer = createStopWatch(), skill = "Shroud" },
 Carnifex_shroud = {defense = "shroud", type = "normal", effect = "Shrouded.",  balance = {needybalancetake = "soul shroud"}, state = "down", needit = false, timer = createStopWatch(), skill = "Shroud" },
 Warden_shroud = {defense = "shroud", type = "normal", effect = "Shrouded.",  balance = {needybalancetake = "ancest distort"}, state = "down", needit = false, timer = createStopWatch(), skill = "Shroud" },
-Syssin_shroud = { defense = "shroud", type = "normal", effect = "Shrouded.",  balance = {needybalancetake = "conjure cloak"}, state = "down", needit = false, timer = createStopWatch(), skill = "Cloak" },
+Infiltrator_shroud = { defense = "shroud", type = "normal", effect = "Shrouded.",  balance = {needybalancetake = "conjure cloak"}, state = "down", needit = false, timer = createStopWatch(), skill = "Cloak" },
 Revenant_maingauche = {defense = "maingauche", type = "normal", effect = "Chance to counter attack", balance = {needyequilibriumtake = "maingauche"}, state = "down", needit = false, timer = createStopWatch(), skill = "MainGauche"},
 Templar_maingauche = {defense = "maingauche", type = "normal", effect = "Chance to counter attack", balance = {needyequilibriumtake = "maingauche"}, state = "down", needit = false, timer = createStopWatch(), skill = "MainGauche"},
 Warden_fearless = {defense = "fearless", type = "normal", effect = "Protects against fear affliction.", balance = {special = "warden fortitude"}, state = "down", needit = false, timer = createStopWatch(), skill = "Fortitude"},
@@ -56772,7 +56823,6 @@ end</script>
   ["You will slip into the shadows after killing."] = "shadowslip",
   ["Phased slightly out of reality, you are effectively untouchable."] = "phase",
   ["You will call upon your fortitude in need."] = "vitality",
-  ["You are regenerating lost health through will."] = "kaido_regeneration",
   ["You are using your superior constitution to prevent nausea."] = "constitution",
   ["Your mind is split, allowing constant meditation."] = "split_mind",
   ["Your blood is steeled against poisons."] = "kaido_immunity",
@@ -57121,6 +57171,23 @@ end</script>
   ["You are extending your Chaotic aura to others."] = "chaos_presence",
   ["You are surrounded by a shroud of Chaos."] = "chaos_shroud",
   ["You have stored away a part of your soul in the safety of Chaos."] = "chaos_store",
+  
+  --Predator
+  
+  
+  ["You are using careful footwork to keep space from foes."] = "spacing",
+  ["You are hiding your identity with a mask."] = "masked",
+  ["You are parrying all attacks that are targeted at your limbs."] = "trueparry",
+  ["You are concentrating on conserving your adrenaline."] = "bladesurge",
+  ["Your body is surging with adrenaline."] = "bladesurge_energy",
+  ["You are attempting to absorb magical attacks directed at you with your sitara."] = "absorption",
+  ["You are regenerating lost health through will."] = "regeneration",
+  ["You are staving off sleep through the use of a second wind."] = "secondwind",
+  ["You are windwalking."] = "windwalking",
+  ["You have tempered your body against the forces of nature."] = "preserval",
+  ["You are capable of seeing through snow fall."] = "whitesight",
+  ["You are averting your gaze below the top of your mask."] = "aversion",
+  ["You are using your battle prowess to defang attacks."] = "defang",
 }
  </script>
 							<eventHandlerList />
@@ -57667,7 +57734,7 @@ registerAnonymousEventHandler("sndNDB Check Highlight", "sndNDB_addHighlight")</
 	}
 	local classes = {
 		Ascendril = {}, Luminary = {}, Sentinel = {}, Shaman = {}, Zealot = {}, Templar = {}, Warden = {}, Oneiromancer = {}, Tidesage = {},
-		Monk = {}, Shapeshifter = {}, Syssin = {}, Wayfarer = {}, 
+		Monk = {}, Shapeshifter = {}, Infiltrator = {}, Wayfarer = {}, 
 		Archivist = {}, Carnifex = {}, Indorani = {}, Praenomen = {}, Sciomancer = {}, Teradrim = {}, Revenant = {}, Earthcaller = {}, Alchemist = {},
     Akkari = {}, Bloodborn = {}, Runecarver = {}
 	}
@@ -70183,7 +70250,8 @@ end</script>
 {class = "Luminary", func = function(current) snd.luminary_bash() end}, 
 {class = "Monk", func = function(current) snd.monk_bash() end}, 
 {class = "Oneiromancer", func = function(current) snd.oneiromancer_bash() end},
-{class = "Praenomen", func = function(current) snd.praenomen_bash() end}, 
+{class = "Praenomen", func = function(current) snd.praenomen_bash() end},
+{class = "Predator", func = function(current) snd.predator_bash() end},
 {class = "Ravager", func = function(current) snd.ravager_bash() end},
 {class = "Revenant", func = function(current) snd.revenant_bash() end},
 {class = "Runecarver", func = function(current) snd.runecarver_bash() end},
@@ -70191,7 +70259,7 @@ end</script>
 {class = "Sentinel", func = function(current) snd.sentinel_bash() end}, 
 {class = "Shaman", func = function(current) snd.shaman_bash() end}, 
 {class = "Shapeshifter", func = function(current) snd.shapeshifter_bash() end}, 
-{class = "Syssin", func = function(current) snd.syssin_bash() end}, 
+{class = "Infiltrator", func = function(current) snd.infiltrator_bash() end}, 
 {class = "Templar", func = function(current) snd.templar_bash() end},
 {class = "Teradrim", func = function(current) snd.teradrim_bash() end},
 {class = "Tidesage", func = function(current) snd.tidesage_bash() end}, 
@@ -70612,6 +70680,19 @@ function snd.praenomen_bash()
   end
 end
 
+function snd.predator_bash()
+  hp = 100 * (gmcp.Char.Vitals.hp / gmcp.Char.Vitals.maxhp)
+  mp = 100 * (gmcp.Char.Vitals.mp / gmcp.Char.Vitals.maxmp)
+  battack = ""
+  local stance = gmcp.Char.Vitals.knife_stance or "None"
+  local attacks = snd.get_predator_bash_attacks()
+  if hp &lt;= 40 and snd.shield_check() then
+    battack = "touch shield"
+  else
+    battack = attacks[stance].." "..snd.bashing.target
+  end
+end
+
 function snd.ravager_bash()
   hp = 100*(gmcp.Char.Vitals.hp/gmcp.Char.Vitals.maxhp)
   mp = 100*(gmcp.Char.Vitals.mp/gmcp.Char.Vitals.maxmp)
@@ -70777,7 +70858,7 @@ function snd.shapeshifter_bash()
 	end
 end
 
-function snd.syssin_bash()
+function snd.infiltrator_bash()
   local hp = 100*(gmcp.Char.Vitals.hp/gmcp.Char.Vitals.maxhp)
   local endur = 100*(gmcp.Char.Vitals.ep/gmcp.Char.Vitals.maxep)
   if hp &lt;=40 and snd.shield_check() then
@@ -70965,6 +71046,56 @@ function snd.none_bash() --super basic bashing function for 200's.
 	end
 end
 </script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>Predator bashing tables</name>
+					<packageName></packageName>
+					<script>function snd.get_predator_bash_attacks()
+if hasSkill("Triplet") then
+    if snd.toggles.laesan then
+    return {
+      ["Gyanis"] = "series lateral lateral lateral swiftkick",
+      ["Vae-Sant"] = "series vertical vertical lateral swiftkick",
+      ["Ein-Fasit"] = "series vertical lateral lateral swiftkick",
+      ["Rizet"] = "series crescentcut swiftkick crescentcut crescentcut",
+      ["Laesan"] = "series swiftkick vertical lateral swiftkick",
+      ["None"] = "series crescentcut lateral lateral crescentcut",
+      ["Bladesurge"] = "series crescentcut crescentcut crescentcut crescentcut",
+    }
+    else
+    return {
+      ["Gyanis"] = "series lateral vertical vertical",
+      ["Vae-Sant"] = "series lateral vertical lateral",
+      ["Ein-Fasit"] = "series vertical vertical vertical",
+      ["Rizet"] = "series vertical vertical lateral",
+      ["Laesan"] = "series crescentcut vertical vertical",
+      ["None"] = "series crescentcut vertical vertical",
+      ["Bladesurge"] = "series crescentcut crescentcut crescentcut crescentcut",
+    }
+    end
+  elseif hasSkill("Twin") then
+    return {
+      ["Gyanis"] = "series lateral lateral",
+      ["Vae-Sant"] = "series vertical vertical",
+      ["Ein-Fasit"] = "series vertical lateral",
+      ["Rizet"] = "series vertical vertical",
+      ["Laesan"] = "series swiftkick vertical", --we shouldn't get here.
+      ["None"] = "series lateral lateral",
+      ["Bladesurge"] = "series vertical vertical vertical",
+      }
+  else
+    return {
+      ["Gyanis"] = "sitara lateral",
+      ["Vae-Sant"] = "sitara lateral",
+      ["Ein-Fasit"] = "sitara vertical",
+      ["Rizet"] = "sitara vertical",
+      ["Laesan"] = "changestance ein-fasit", --we shouldn't get here.
+      ["None"] = "sitara lateral",
+      ["Bladesurge"] = "sitara vertical",
+    }
+  end
+end</script>
 					<eventHandlerList />
 				</Script>
 				<Script isActive="yes" isFolder="no">
@@ -72714,7 +72845,7 @@ monk = {
 def_weathering = "on",
 def_toughness = "on",
 def_vitality = "on",
-def_kaido_regeneration = "on",
+def_regeneration = "on",
 def_resistance = "on",
 def_constitution = "on",
 def_split_mind = "on",
@@ -72821,7 +72952,7 @@ def_corner = "once",
 --def_harden = "once",
 },
 
-syssin = {
+infiltrator = {
 def_warding = "once",
 def_finesse = "once",
 def_shadowsight = "once",
@@ -72909,7 +73040,17 @@ def_resurgence = "on",
 def_discharge = "on",
 def_deflection = "on",
 def_mindspark = "on",
-
+},
+predator = {
+  def_spacing = "on",
+  def_bladesurge = "once",
+  def_absorption = "on",
+  def_regeneration = "on",
+  def_secondwind = "on",
+  def_windwalking = "on",
+  def_preserval = "on",
+  def_whitesight = "on",
+  def_defang = "on",
 },
 --200s
 malevolent = {
@@ -73653,6 +73794,7 @@ snd.entangleaffs = {
   "writhe_ropes",
   "writhe_vines",
   "writhe_grappled",
+  "writhe_dartpinned",
  }
 
 
@@ -73669,12 +73811,13 @@ sentinel = {"Dhuriv", "Woodlore", "Tracking"},
 shaman = {"Primality", "Shamanism", "Naturalism", "Experimentation", "Alchemy", "Botany"},
 monk = {"Tekura", "Kaido", "Telepathy"},
 zealot = {"Zeal", "Purification", "Psionics", "Brutality", "Ravaging", "Egotism"},
-syssin = {"Assassination", "Subterfuge", "Hypnosis"},
+infiltrator = {"Assassination", "Subterfuge", "Hypnosis"},
 shifter = {"Ferality", "Shapeshifting", "Vocalizing"},
 wayfarer = {"Tenacity", "Wayfaring", "Fury"},
 templar = {"Battlefury", "Righteousness", "Bladefire", "Chirography", "Riving", "Manifestation"},
 carnifex = {"Savagery", "Deathlore", "Warhounds", "Warding", "Ancestry", "Communion"},
 bard = {"Songcalling", "Performance", "Weaving"},
+predator = {"Knifeplay", "Predation", "Beastmastery"},
 }</script>
 					<eventHandlerList />
 				</Script>
@@ -76233,6 +76376,18 @@ end</script>
                           snd.their_mutagen = true
                         end
              end,
+          Nexus = function(target, advance)
+              if advance then
+                snd.target_got("mutagen")
+                if snd.hitting == "You" then
+                  snd.my_mutagen = true
+                  snd.their_mutagen = false
+                else
+                  snd.my_mutagen = false
+                  snd.their_mutagen = true
+                end
+              end
+            end,
           Advance = function(target)
                         snd.target_got("mutagen")
                         if snd.hitting == "You" then
@@ -78678,8 +78833,200 @@ end</script>
       enableTrigger("Weapon Hit Confirmation")
     end,
   },
+  
+  ["Knifeplay"] = {
+    Fleshbane = 
+      function(target)
+        if snd.checkAff("haemophilia") then
+          snd.target_got("fleshbane")
+        end
+      end,
+    Lateral =
+      function(target)
+        snd.last_hit_limb = "torso"
+        snd.last_limb_dmg = 6
+        snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+        snd.onHit2({"Parry", "Dodge", "Rebounding"})
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Vertical =
+      function(target)
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Pinprick =
+      function(target)
+        snd.target_got("epilepsy")
+        snd.onHit2({"Dodge", "Rebounding"})
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Trip =
+      function(target)
+        snd.target_got("fallen")
+      end,
+    Jab =
+      function(target, bodypart)
+        snd.last_hit_limb = bodypart
+        snd.last_limb_dmg = 5.5
+        snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+        snd.onHit2({"Parry", "Dodge", "Rebounding"})
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Spinslash =
+      function(target, bodypart)
+        snd.last_hit_limb = bodypart
+        snd.last_limb_dmg = 7
+        snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+        snd.onHit2({"Parry", "Dodge", "Rebounding"})
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Lowhook =
+      function(target, bodypart)
+        snd.last_hit_limb = bodypart
+        snd.last_limb_dmg = 5.5
+        snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+        snd.onHit2({"Parry", "Dodge", "Rebounding"})
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Feint = function(target, limb)
+             snd.parried_limb = limb
+            end,
+   Raze = function(target, defense)
+                if defense == "shield" then snd.used.shield = false end
+                if defense == "rebounding" then snd.used.rebounding = false end
+                if defense == "speed" then snd.target_got("no_speed") end
+                if defense == "failure" then snd.target_got("no_speed"); snd.used.rebounding = false; snd.used.shield = false end
+              end,
+    Flashkick =
+      function(target)
+        snd.last_hit_limb = "head"
+        snd.last_limb_dmg = 5
+        snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+        snd.onHit2({"Parry", "Dodge"})
+      end,
+    Crescentcut =
+      function(target)
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Freefall =
+      function(target)
+        enableTrigger("Weapon Hit Confirmation")
+        snd.target_got("fallen")
+      end,
+    Gouge =
+      function(target)
+        snd.last_hit_limb = "head"
+        snd.last_limb_dmg = 6.5
+        snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+        table.insert(snd.maybe_affs, 1, "disfigurement")
+        snd.onHit2({"Parry", "Dodge"})
+      end,
+    Takedown =
+      function(target)
+        snd.target_got("fallen")
+      end,
+    Butterfly =
+      function(target)
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Pommelwhip =
+      function(target)
+        snd.target_got("blackout")
+      end,
+  },
+  ["Predation"] = {
+    Pheromones =
+      function(target)
+        snd.target_got("pacifism")
+      end,
+    Pindown =
+      function(target)
+        snd.target_got("writhe_dartpinned")
+      end,
+    Dartshot =
+      function(target)
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+    Twinshot =
+      function(target)
+        enableTrigger("Weapon Hit Confirmation")
+      end,
+  },
+  ["Beastmastery"] = {
+    Disrupt =
+      function(target)
+        snd.target_got("disrupt")
+      end,
+    Pummel =
+      function(target, limb)
+        snd.last_hit_limb = limb
+        snd.last_limb_dmg = 20
+        snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+        snd.onHit2({"Parry", "Dodge"})
+      end,
+    Web =
+      function(target)
+        snd.target_got("writhe_web")
+      end,
+  },
 
 }</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>Calculate stuff</name>
+					<packageName></packageName>
+					<script>snd.calc = snd.calc or {}
+
+--calculate how long it will take a target to writhe off an impale
+function snd.calc.writhetime()
+  local physcount = 0
+  for _, aff in pairs(snd.physical_affs) do
+    if snd.checkAff(aff) then
+      physcount = physcount + 1
+    end
+  end
+  for limb, status in pairs(snd.limb_status) do
+    if status ~= "healed" then
+      physcount = physcount + 1
+    end
+  end
+  local time = 2 + (.7 * physcount)
+  if snd.checkAff("physical_disruption") then
+    time = time + 1
+  end
+  return time
+end
+
+--calculate how much crescentcut's damage will be increased
+function snd.calc.crescentcutMultiplier()
+  local multi = 1
+  if snd.checkAff("paresis") then multi = multi + .15 end
+  if snd.checkAff("left_leg_crippled") then multi = multi + .1 end
+  if snd.checkAff("right_leg_crippled") then multi = multi + .1 end
+  if snd.checkAff("fallen") then multi = multi + .25 end
+  --writhe affs
+  for _, aff in pairs(snd.entangleaffs) do
+    if snd.checkAff(aff) then
+      multi = multi + .15
+      break
+    end
+  end
+  --broken legs
+  for _, limb in pairs({"right leg", "left leg", "left arm", "right arm"}) do
+    if snd.limb_status[limb] ~= "healed" then
+      multi = multi + .35
+    end
+  end
+  --broken/mangled head or torso
+  for _, limb in pairs({"head", "torso"}) do
+    if snd.limb_status[limb] == "mangled" then
+      multi = multi + .5
+    elseif snd.limb_status[limb] == "broken" then
+      multi = multi + .3
+    end
+  end
+  return multi
+end</script>
 					<eventHandlerList />
 				</Script>
 				<ScriptGroup isActive="yes" isFolder="yes">
@@ -79280,7 +79627,7 @@ function snd.akkari_lovers(tab)
 end
 
 function snd.akkari_peace()
-  if snd.cureset == "carnifex" or snd.cureset == "zealot" or snd.cureset == "monk" or snd.cureset == "syssin" or snd.cureset == "wayfarer" then
+  if snd.cureset == "carnifex" or snd.cureset == "zealot" or snd.cureset == "monk" or snd.cureset == "infiltrator" or snd.cureset == "wayfarer" then
     if table.contains(snd.secondary_aff, "peace") then
       table.remove(snd.secondary_aff, table.index_of(snd.secondary_aff, "peace"))
     end
@@ -79289,7 +79636,7 @@ end
 
 function snd.akkari_disfigure()
   if table.contains(snd.primary_aff, "disfigurement") then
-    if snd.cureset == "luminary" or snd.cureset == "templar" or snd.cureset == "syssin" 
+    if snd.cureset == "luminary" or snd.cureset == "templar" or snd.cureset == "infiltrator" 
     or snd.cureset == "bard" or snd.cureset == "shifter" or snd.cureset == "wayfarer" 
     or snd.cureset == "monk" then
       table.remove(snd.primary_aff, table.index_of(snd.primary_aff, "disfigurement"))
@@ -79424,13 +79771,13 @@ end</script>
     crack = "slam",
   }
 local attackDamage = {
-  gutsmash = 11.99,
+  gutsmash = 12,
   facesmash = 12.99,
-  batter = 13.74,
-  furor = 7.79,
+  batter = 13.75,
+  furor = 7.8,
   fracture = 12,
   skullbash = 16,
-  pulp = 9.41,
+  pulp = 9.47,
   slam = 10,
   barrage1 = 4,
   barrage2 = 3.5,
