@@ -1558,11 +1558,13 @@ snd.delete_prompt = true</script>
 									<string>Your pipe has gone cold and dark.</string>
 									<string>Your pipes have gone cold and dark.</string>
 									<string>That pipe isn't lit.</string>
+									<string>^Your pipe with \w+ has gone cold and dark\.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>3</integer>
 									<integer>3</integer>
 									<integer>3</integer>
+									<integer>1</integer>
 								</regexCodePropertyList>
 							</Trigger>
 						</TriggerGroup>
@@ -73523,7 +73525,7 @@ def_mindspark = "on",
 },
 predator = {
   def_spacing = "on",
-  def_bladesurge = "once",
+  def_bladesurge = "on",
   --def_absorption = "on",
   def_regeneration = "on",
   def_secondwind = "on",
