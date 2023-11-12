@@ -6398,10 +6398,10 @@ disableTrigger("Separator Check/Update")
 					</Trigger>
 					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 						<name>People updating via following</name>
-						<script>
+						<script>local blacklist = {a = true, masked = true, man = true, ["and"] = true, woman = true, person = true}
 local do_we_update = false
 for name in string.gmatch(matches[2], '[^,%s]+') do
-  if name ~= "and" then
+  if not blacklist[name] then
 		if not table.isMember(snd.players_here, name) then
 	    table.insert(snd.players_here, name)
 			do_we_update = true
@@ -7338,16 +7338,18 @@ snd.skill_being_used = ""
 						</regexCodePropertyList>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>Basic attack</name>
-							<script>
-if snd.target == matches[5] and snd.all_class_attacks[matches[3]] ~= nil then
+							<script>local selves = {herself = true, himself = true, itself = true, themself = true}
+local target = selves[matches[5]] and matches[2] or matches[5]
+
+if snd.target == target and snd.all_class_attacks[matches[3]] ~= nil then
   if snd.all_class_attacks[matches[3]][matches[4]] ~= nil then
-    snd.getting_hit = matches[5]
+    snd.getting_hit = target
     snd.skill_being_used = matches[4]
-    snd.all_class_attacks[matches[3]][matches[4]](matches[5])
+    snd.all_class_attacks[matches[3]][matches[4]](target)
   end
 end
 
-if matches[2] == snd.target and matches[5] == "You" then
+if matches[2] == snd.target and target == "You" then
   snd.used.rebounding = false
 end</script>
 							<triggerType>0</triggerType>
@@ -7369,25 +7371,29 @@ end</script>
 						</Trigger>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>Attack w/conditional</name>
-							<script>if snd.target == matches[6] and snd.all_class_attacks[matches[3]] ~= nil then
+							<script>local selves = {herself = true, himself = true, itself = true, themself = true}
+local target = selves[matches[6]] and matches[2] or matches[6]
+
+
+if snd.target == target and snd.all_class_attacks[matches[3]] ~= nil then
+  snd.getting_hit = target
   if matches[4] == "Shadowprice" then
     if snd.all_class_attacks[matches[3]][matches[5]] ~= nil then
       snd.skill_being_used = matches[5]
-      snd.all_class_attacks[matches[3]][matches[5]](matches[6], matches[4])
+      snd.all_class_attacks[matches[3]][matches[5]](target, matches[4])
     end
    elseif matches[4] == "Spiritpact" then
     if snd.all_class_attacks[matches[3]][matches[5]] ~= nil then
       snd.skill_being_used = matches[5]
-      snd.all_class_attacks[matches[3]][matches[5]](matches[6], matches[4])
+      snd.all_class_attacks[matches[3]][matches[5]](target, matches[4])
     end  
   elseif snd.all_class_attacks[matches[3]][matches[4]] ~= nil then
       snd.skill_being_used = matches[4]
-      snd.all_class_attacks[matches[3]][matches[4]](matches[6], matches[5])
+      snd.all_class_attacks[matches[3]][matches[4]](target, matches[5])
   end
-  snd.getting_hit = matches[6]
 end
 
-if matches[2] == snd.target and matches[6] == "You" then
+if matches[2] == snd.target and target == "You" then
   snd.used.rebounding = false
 end</script>
 							<triggerType>0</triggerType>
@@ -7409,15 +7415,18 @@ end</script>
 						</Trigger>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>Some attacks contain conditional in ()</name>
-							<script>if snd.target == matches[6] and snd.all_class_attacks[matches[3]] ~= nil then
+							<script>local selves = {herself = true, himself = true, itself = true, themself = true}
+local target = selves[matches[6]] and matches[2] or matches[6]
+
+if snd.target == target and snd.all_class_attacks[matches[3]] ~= nil then
   if snd.all_class_attacks[matches[3]][matches[4]] ~= nil then
-    snd.all_class_attacks[matches[3]][matches[4]](matches[6], matches[5])
-    snd.getting_hit = matches[6]
+    snd.getting_hit = target
     snd.skill_being_used = matches[4]
+    snd.all_class_attacks[matches[3]][matches[4]](target, matches[5])
   end
 end
 
-if matches[2] == snd.target and matches[6] == "You" then
+if matches[2] == snd.target and target == "You" then
   snd.used.rebounding = false
 end</script>
 							<triggerType>0</triggerType>
@@ -7439,16 +7448,19 @@ end</script>
 						</Trigger>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>Conditional w/shadowprice</name>
-							<script>if snd.target == matches[6] and snd.all_class_attacks[matches[3]] ~= nil then
+							<script>local selves = {herself = true, himself = true, itself = true, themself = true}
+local target = selves[matches[6]] and matches[2] or matches[6]
+
+if snd.target == target and snd.all_class_attacks[matches[3]] ~= nil then
   if snd.all_class_attacks[matches[3]][matches[4]] ~= nil then
-    snd.getting_hit = matches[6]
+    snd.getting_hit = target
     snd.skill_being_used = matches[4]
-    snd.all_class_attacks[matches[3]][matches[4]](matches[6], matches[5])
+    snd.all_class_attacks[matches[3]][matches[4]](target, matches[5])
   end
 end
 -- This might be only Hew and if so it's a pain in the ass.
 
-if matches[2] == snd.target and matches[6] == "You" then
+if matches[2] == snd.target and target == "You" then
   snd.used.rebounding = false
 end</script>
 							<triggerType>0</triggerType>
@@ -7524,15 +7536,18 @@ end</script>
 						</Trigger>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>Attack w/double conditional</name>
-							<script>if snd.target == matches[7] and snd.all_class_attacks[matches[3]] ~= nil then
+							<script>local selves = {herself = true, himself = true, itself = true, themself = true}
+local target = selves[matches[7]] and matches[2] or matches[7]
+
+if snd.target == target and snd.all_class_attacks[matches[3]] ~= nil then
   if snd.all_class_attacks[matches[3]][matches[4]] ~= nil then
-    snd.getting_hit = matches[7]
+    snd.getting_hit = target
     snd.skill_being_used = matches[4]
-    snd.all_class_attacks[matches[3]][matches[4]](matches[7], matches[5], matches[6])
+    snd.all_class_attacks[matches[3]][matches[4]](target, matches[5], matches[6])
   end
 end
 
-if matches[2] == snd.target and matches[7] == "You" then
+if matches[2] == snd.target and target == "You" then
   snd.used.rebounding = false
 end</script>
 							<triggerType>0</triggerType>
@@ -9001,7 +9016,7 @@ snd.maybe_affs = {}</script>
    snd.message("Gave: "..matches[2])
   end
   
-  local attacks = {"Lob", "Assault", "Slaughter", "Carve", "Cripple"}
+  local attacks = {Lob = true, Assault = true, Slaughter = true, Carve = true, Cripple = true, Bloodscourge = true, Fleshbane = true, Butterfly = true}
   if attacks[snd.skill_being_used] == nil then
     snd.used.rebounding = false
   end
@@ -20949,7 +20964,11 @@ disableTrigger("Weapon Hit Confirmation")</script>
 								</Trigger>
 								<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 									<name>Darts</name>
-									<script>snd.onHit2({}, "Templar")</script>
+									<script>if snd.maybe_affs[1]:lower() == "cirisosis" then
+  table.remove(snd.maybe_affs, 1)
+else
+  snd.onHit2({}, "Templar")
+end</script>
 									<triggerType>0</triggerType>
 									<conditonLineDelta>0</conditonLineDelta>
 									<mStayOpen>0</mStayOpen>
@@ -21942,7 +21961,7 @@ end</script>
 							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 								<name>Bloodscourge aff</name>
 								<script>if matches[2] == snd.target then
-  snd.target_got(matches[3])
+  snd.target_got(snd.venomEffect(matches[3]))
 end</script>
 								<triggerType>0</triggerType>
 								<conditonLineDelta>0</conditonLineDelta>
@@ -21963,7 +21982,7 @@ end</script>
 							</Trigger>
 							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 								<name>Darts</name>
-								<script>if matches[2] == snd.target then
+								<script>if matches[2] == snd.target and matches[3]~= "cirisosis" then
   snd.target_got(snd.venomEffect(matches[3]))
 end</script>
 								<triggerType>0</triggerType>
@@ -21978,6 +21997,76 @@ end</script>
 								<colorTriggerBgColor>#000000</colorTriggerBgColor>
 								<regexCodeList>
 									<string>^Your dart strikes (\w+), digging (\w+) into \w+ flesh\.$</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="yes" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Cirisosis applied</name>
+								<script>if multimatches[1][2] == snd.target and multimatches[2][2] == snd.target then
+  snd.target_got("cirisosis")
+end</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>1</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>^Your dart strikes (\w+), digging cirisosis into \w+ flesh\.$</string>
+									<string>^You discern that (\w+) has cured the effects of</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>1</integer>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="yes" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Cirisosis applied 3p</name>
+								<script>if multimatches[1][2] == snd.target and multimatches[2][2] == snd.target then
+  snd.target_got("cirisosis")
+end</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>1</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>^(\w+) flinches as the small dart pierces \w+ skin\.$</string>
+									<string>^You discern that (\w+) has cured the effects of</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>1</integer>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Cirisosis symptom</name>
+								<script>if matches[2] == snd.target then
+  snd.target_got("cirisosis")
+end</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>0</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>^(\w+)'s? eyes glaze over, and \w+ shivers uncontrollably, looking increasingly unsteady and ill\. Beads of sweat and palpable fatigue herald the onset of toxic shock\.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
@@ -22599,10 +22688,14 @@ end</script>
 							<colorTriggerFgColor>#000000</colorTriggerFgColor>
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
-								<string>^(\w+) is no longer affected by your morphing venom.$</string>
+								<string>^(\w+) is no longer affected by your morphing venom\.$</string>
+								<string>^(\w+) has escaped the effects of your morphing poison\.$</string>
+								<string>^Relief floods (\w+) as the deadly morphing poison is purged from \w+ system\.$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
+								<integer>1</integer>
+								<integer>0</integer>
 							</regexCodePropertyList>
 						</Trigger>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -25969,6 +26062,54 @@ end
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
+								<integer>1</integer>
+							</regexCodePropertyList>
+						</Trigger>
+						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+							<name>Fleshbane proc</name>
+							<script>local numbermap =
+  {
+    one = 1,
+    two = 2,
+    three = 3,
+    four = 4,
+    five = 5,
+    six = 6,
+    seven = 7,
+    eight = 8,
+    nine = 9,
+    ten = 10,
+    eleven = 11,
+    twelve = 12,
+    thirteen = 13,
+    fourteen = 14,
+    fifteen = 15,
+    sixteen = 16,
+    seventeen = 17,
+    eighteen = 18,
+    nineteen = 19,
+    twenty = 20,
+  }
+if matches[3] == snd.target then
+  snd.fleshbaneStacks = numbermap[matches[2]]
+  --failsafe to make sure this goes back to zero.
+  if snd.fleshbaneTimer then killTimer(snd.fleshbaneTimer) end
+  snd.fleshbaneTimer = tempTimer(5, function() snd.fleshbaneStacks = 0 end)
+end</script>
+							<triggerType>0</triggerType>
+							<conditonLineDelta>0</conditonLineDelta>
+							<mStayOpen>0</mStayOpen>
+							<mCommand></mCommand>
+							<packageName></packageName>
+							<mFgColor>#ff0000</mFgColor>
+							<mBgColor>#ffff00</mBgColor>
+							<mSoundFile></mSoundFile>
+							<colorTriggerFgColor>#000000</colorTriggerFgColor>
+							<colorTriggerBgColor>#000000</colorTriggerBgColor>
+							<regexCodeList>
+								<string>^The (\w+) slices on (\w+) fester, interfering with the restoration of \w+ limbs\.$</string>
+							</regexCodeList>
+							<regexCodePropertyList>
 								<integer>1</integer>
 							</regexCodePropertyList>
 						</Trigger>
@@ -51400,7 +51541,7 @@ snd.send("ih "..snd.shopitem)</script>
 						<name>Buying pills</name>
 						<script>pills = {
 "waterbreathing",
-"kawhepil",
+"kawhepill",
 "acuity",
 "steroid",
 "stimulant",
@@ -73904,6 +74045,7 @@ snd.target_has = {}
 snd.rebounded = false
 snd.target_impaled = false -- do we specifically have our target imapled
 
+snd.fleshbaneStacks = 0
 
 snd.effects = {
 --venoms
@@ -74348,8 +74490,13 @@ function snd.took_limb_dmg(limb, amount)
       amount = amount/2
       snd.last_limb_dmg = amount
     end
-   
-    snd.limb_dmg[limb] = snd.limb_dmg[limb] + amount
+    if amount == -30 or amount == -40 then --resto apply
+      snd.limb_dmg[limb] = snd.limb_dmg[limb] + math.min(0, amount+2*snd.fleshbaneStacks)
+      if snd.fleshbaneTimer then killTimer(snd.fleshbaneTimer) end
+      snd.fleshbaneStacks = 0
+    else
+      snd.limb_dmg[limb] = snd.limb_dmg[limb] + amount
+    end
     if snd.limb_dmg[limb] &lt; 0 then
       snd.limb_dmg[limb] = 0
     end
@@ -79330,12 +79477,18 @@ end</script>
     Attack = function(target)
       enableTrigger("Weapon Hit Confirmation")
     end,
+    Shatter = function(target, limb)
+      if limb == "start" then return end
+      snd.last_hit_limb = limb
+      snd.last_limb_dmg = 33.34
+      snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
+      snd.onHit2({"Parry"})
+    end,
   },
   
   ["Knifeplay"] = {
     Fleshbane = 
       function(target)
-        snd.target_got("fleshbane")
         local fleshbaned = target
         if snd.fleshbaneTimer then killTimer(snd.fleshbaneTimer) end
         snd.fleshbaneTimer = tempTimer(60, function() if fleshbaned == snd.target then snd.target_cured("fleshbane")  end end)
@@ -79358,7 +79511,11 @@ end</script>
     Vertical =
       function(target)
         snd.setPredatorVenom()
-        snd.maybe_affs = {snd.predatorVenom ~= "none" and snd.predatorVenom}
+        if snd.predatorVenom ~="none" then
+          snd.maybe_affs = {snd.predatorVenom}
+        else
+          snd.maybe_affs = {}
+        end
         snd.onHit2({"Dodge", "Rebounding"})
       end,
     Pinprick =
@@ -79386,7 +79543,7 @@ end</script>
         snd.setPredatorVenom()
         snd.maybe_affs = {}
         snd.last_hit_limb = bodypart
-        snd.last_limb_dmg = 7
+        snd.last_limb_dmg = 4
         snd.took_limb_dmg(snd.last_hit_limb, snd.last_limb_dmg)
         snd.onHit2({"Parry", "Dodge", "Rebounding"})
       end,
@@ -79422,13 +79579,21 @@ end</script>
     Crescentcut =
       function(target)
         snd.setPredatorVenom()
-        snd.maybe_affs = {snd.predatorVenom ~= "none" and snd.predatorVenom}
+        if snd.predatorVenom ~="none" then
+          snd.maybe_affs = {snd.predatorVenom}
+        else
+          snd.maybe_affs = {}
+        end
         snd.onHit2({"Dodge", "Rebounding"})
       end,
     Freefall =
       function(target)
         snd.setPredatorVenom()
-        snd.maybe_affs = {"fallen", snd.predatorVenom ~= "none" and snd.predatorVenom}
+        if snd.predatorVenom ~="none" then
+          snd.maybe_affs = {"fallen", snd.predatorVenom}
+        else
+          snd.maybe_affs = {"fallen"}
+        end
         snd.onHit2({"Dodge"},"Double Aff")
       end,
     Gouge =
@@ -79448,7 +79613,11 @@ end</script>
     Butterfly =
       function(target)
         snd.setPredatorVenom()
-        snd.maybe_affs = {snd.predatorVenom ~= "none" and snd.predatorVenom}
+        if snd.predatorVenom ~="none" then
+          snd.maybe_affs = {snd.predatorVenom}
+        else
+          snd.maybe_affs = {}
+        end
         snd.onHit2({"Dodge"})
       end,
     Pommelwhip =
