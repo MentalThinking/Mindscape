@@ -878,8 +878,10 @@ end</script>
 									<colorTriggerBgColor>#000000</colorTriggerBgColor>
 									<regexCodeList>
 										<string>You are not contemplating the correct essence.</string>
+										<string>You have yet to bloom the proper chakra.</string>
 									</regexCodeList>
 									<regexCodePropertyList>
+										<integer>3</integer>
 										<integer>3</integer>
 									</regexCodePropertyList>
 								</Trigger>
@@ -23924,8 +23926,10 @@ end</script>
 							<string>^(\w+) is already fallen upon the ground\.$</string>
 							<string>^With a struggle, (\w+) attempts to call upon \w+ willpower reserves, however the effort leaves \w+ looking dizzy and weak. \w+ eyes quickly grow unfocused and .+ sways? slightly before crashing heavily to the ground, and \w+ quickly slips into unconsciousness.$</string>
 							<string>^A blow knocks (\w+)'s? balance too far from the balls of \w+ feet, bringing \w+ crashing to the ground\.$</string>
+							<string>^(\w+) is dragged into the location from the \w+ by a thin thread looped around one of \w+ feet\.$</string>
 						</regexCodeList>
 						<regexCodePropertyList>
+							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
@@ -61513,7 +61517,7 @@ snd.areas = {
 {area = "a volcanic island", level = "99+", targets = {  "a many-legged cinder crawler", "a sinuous elemental of acerbic smoke",  "an enraged hyriamah", "a firebound terror", "a cumbrous magma beast", "a fierce, lithely limbed firedancer", }},
 {area = "Mejev Nider Nesve wo Ti, Matati wo Eja sota Aran wo Aransa", level = "99+", targets = {"a four-winged ayvarin", "a swift vukon", "a predatory kashnalda",}},
 {area = "a dimly lit subterranean river", level = "99+", targets = {"an iridescent bubble of elemental energies", "a long-finned, cerulean amphibian", "a billowing cloud of shifting luminescence", "a spiny many-armed water elemental", "a tempestuous wave elemental", "a shimmering piscine elemental"}},
-{area = "the Offspring", level = "90+", targets = {"a pudgy water badger", "a flat-snouted scaled sheep", "a chromatic aquatic dragonfly", " a muscular freshwater hound", "a long-tailed bullfrog", "an amphibious, ebon-winged hawk", "a predatory river canine",}},
+{area = "the Offspring", level = "90+", targets = {"a pudgy water badger", "a flat-snouted scaled sheep", "a chromatic aquatic dragonfly", "a muscular freshwater hound", "a long-tailed bullfrog", "an amphibious, ebon-winged hawk", "a predatory river canine",}},
 {area = "Endless Battlefield", level = "90+", targets = {"a blood-drenched soldier wielding a claymore", "a blood-drenched swordsman", "a blood-drenched spear fighter", "a blood-drenched archer",}},
 {area = "Sunwash Ascent", level = "90", targets = {"a menacing vrukh lurker", "a vrukh clutch-matron", "a grotesque, battle-torn vrukh", "a gnarled, decrepit vrukh", "a vicious, maimed vrukh", "a bald fledgling vrukh", "a disgusting fledgling vrukh",}},
 {area = "Beggar's Barrow", level = "99", targets = {"a wiry Aslinn cutthroat", "a morose Golban outcast", "a lithe Caentoi cutthroat", "an indolent Golban mercenary", "a scrawny Aslinn mercenary", "a bedraggled Caentoi outcast", "a one-legged Aslinn beggar", "a mangy Caentoi beggar",}},
@@ -81727,7 +81731,7 @@ end</script>
     Pheromones =
       function(target)
         snd.setPredatorVenom()
-        snd.target_got("pacifism")
+        snd.target_got("lovers_effect")
       end,
     Pindown =
       function(target)
@@ -83456,7 +83460,7 @@ ylm.foci = 0
 					<packageName></packageName>
 					<script>
 ylm.path = {
- 
+
 v1680 = "20389",
 v20389 = "13253",
 v13253 = "60762",
@@ -83489,7 +83493,8 @@ v26841 = "38090",
 v38090 = "26994",
 v26994 = "11326",
 v11326 = "11311",
-v11311 = "77437",
+v11311 = "76497",
+v76497 = "77437",
 v77437 = "25738",
 v25738 = "19602",
 v19602 = "53444",
@@ -83514,8 +83519,7 @@ v9510 = "19576",
 v19576 = "64288",
 v64288 = "55101",
 v55101 = "17034",
-v17034 = "18462",
-v18462 = "62996",
+v17034 = "62996",
 v62996 = "73508",
 v73508 = "4163",
 v4163 = "3276",
@@ -83529,8 +83533,7 @@ v70916 = "21908",
 v21908 = "51157",
 v51157 = "62383",
 v62383 = "18082",
-v18082 = "49875",
-v49875 = "25969",
+v18082 = "25969",
 v25969 = "44816",
 v44816 = "18601",
 v18601 = "22477",
@@ -83551,15 +83554,15 @@ v59187 = "22824",
 v22824 = "23791",
 v23791 = "23140",
 v23140 = "22702",
-v22702 = "16282",
+v22702 = "58704",
+v58704 = "16282",
 v16282 = "72008",
 v72008 = "47147",
 v47147 = "1288",
 v1288 = "63306",
 v63306 = "56648",
 v56648 = "4740",
-v4740 = "61928",
-v61928 = "4808",
+v4740 = "4808",
 v4808 = "65189",
 v65189 = "49749",
 v49749 = "64608",
@@ -83590,8 +83593,8 @@ v11988 = "11994",
 v11994 = "56435",
 v56435 = "25408",
 v25408 = "59862",
-v59862 = "18434",
-v18434 = "11412",
+v59862 = "18439",
+v18439 = "11412",
 v11412 = "19854",
 v19854 = "31576",
 v31576 = "55276",
@@ -83599,7 +83602,8 @@ v55276 = "58912",
 v58912 = "20835",
 v20835 = "21286",
 v21286 = "23202",
-v23202 = "77434",
+v23202 = "73619",
+v73619 = "77434",
 v77434 = "57559",
 v57559 = "4964",
 v4964 = "2036",
@@ -83621,7 +83625,7 @@ v16706 = "17069",
 v17069 = "60726",
 v60726 = "15344",
 v15344 = "city"
- 
+
 }</script>
 					<eventHandlerList />
 				</Script>
