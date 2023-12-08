@@ -5088,8 +5088,10 @@ tempTimer(5,[[snd.transmutation = true]])</script>
 								<string>As you lift your arms overhead, the dust and earth around you rise up, collecting in a cloud about your person. The cloud thickens and cakes over your flesh, and when it falls away, you feel healthier.</string>
 								<string>You use Wavebreaking Yearn.</string>
 								<string>You use Terramancy Absorb.</string>
+								<string>The sea will not respond to your yearning again so soon.</string>
 							</regexCodeList>
 							<regexCodePropertyList>
+								<integer>3</integer>
 								<integer>3</integer>
 								<integer>3</integer>
 								<integer>3</integer>
@@ -5163,9 +5165,17 @@ tempTimer(5,[[snd.transmutation = true]])</script>
 								<string>^(.*) roars as the attack launches it into a temporary frenzy.$</string>
 								<string>You lock eyes with your golem, binding your wills together in preparation for a brutal strike.</string>
 								<string>You convey an instruction to your elemental, ensuring its focus on act.</string>
+								<string>You have gained the imbue_will defence.</string>
+								<string>You have gained the elemental_engulf defence.</string>
+								<string>Your imbue_will defence has been stripped.</string>
+								<string>Your elemental_engulf defence has been stripped.</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
+								<integer>3</integer>
+								<integer>3</integer>
+								<integer>3</integer>
+								<integer>3</integer>
 								<integer>3</integer>
 								<integer>3</integer>
 							</regexCodePropertyList>
@@ -5188,6 +5198,33 @@ tempTimer(5,[[snd.transmutation = true]])</script>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>3</integer>
+							</regexCodePropertyList>
+						</Trigger>
+						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+							<name>Stoneblast/riptide</name>
+							<script>if matches[2] == snd.target then
+  snd.used.rebounding = false
+  if matches[3] ~= "rebounding" then
+    snd.used.shield = false
+  end
+end</script>
+							<triggerType>0</triggerType>
+							<conditonLineDelta>0</conditonLineDelta>
+							<mStayOpen>0</mStayOpen>
+							<mCommand></mCommand>
+							<packageName></packageName>
+							<mFgColor>#ff0000</mFgColor>
+							<mBgColor>#ffff00</mBgColor>
+							<mSoundFile></mSoundFile>
+							<colorTriggerFgColor>#000000</colorTriggerFgColor>
+							<colorTriggerBgColor>#000000</colorTriggerBgColor>
+							<regexCodeList>
+								<string>^The stones rip apart (\w+)'s (\w+) defence\.$</string>
+								<string>^The riptide washes away (\w+)'s (\w+) defence\.$</string>
+							</regexCodeList>
+							<regexCodePropertyList>
+								<integer>1</integer>
+								<integer>1</integer>
 							</regexCodePropertyList>
 						</Trigger>
 					</TriggerGroup>
@@ -6812,18 +6849,31 @@ disableTrigger("Separator Check/Update")
 					</Trigger>
 					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 						<name>People updating via following</name>
-						<script>local blacklist = {A = true, a = true, masked = true, man = true, ["and"] = true, woman = true, person = true, shadowy = true, figure = true}
+						<script>local blacklist =
+  {
+    A = true,
+    a = true,
+    masked = true,
+    man = true,
+    ["and"] = true,
+    woman = true,
+    person = true,
+    shadowy = true,
+    concealed = true,
+    figure = true,
+  }
 local do_we_update = false
 for name in string.gmatch(matches[2], '[^,%s]+') do
   if not blacklist[name] then
-		if not table.isMember(snd.players_here, name) then
-	    table.insert(snd.players_here, name)
-			do_we_update = true
-		end
+    if not table.isMember(snd.players_here, name) then
+      table.insert(snd.players_here, name)
+      do_we_update = true
+    end
   end
 end
-if do_we_update then raiseEvent("sunder_people_update") end
-</script>
+if do_we_update then
+  raiseEvent("sunder_people_update")
+end</script>
 						<triggerType>0</triggerType>
 						<conditonLineDelta>0</conditonLineDelta>
 						<mStayOpen>0</mStayOpen>
@@ -9068,10 +9118,12 @@ snd.theytumbling = false</script>
 						<regexCodeList>
 							<string>You can't do that if your target isn't prone!</string>
 							<string>^(\w+) nimbly stays on [a-zA-Z ]+ feet\.$</string>
+							<string>Your target isn't prone.</string>
 						</regexCodeList>
 						<regexCodePropertyList>
 							<integer>3</integer>
 							<integer>1</integer>
+							<integer>3</integer>
 						</regexCodePropertyList>
 					</Trigger>
 					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
@@ -20886,7 +20938,7 @@ end</script>
 									</Trigger>
 								</TriggerGroup>
 							</TriggerGroup>
-							<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+							<TriggerGroup isActive="no" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 								<name>Weapon Hit Confirmation</name>
 								<script>-- generic weapon lines that both classes use</script>
 								<triggerType>0</triggerType>
@@ -23663,7 +23715,9 @@ disableTrigger("Sunder Parry")</script>
     table.remove(snd.maybe_affs, 1)
     return
   end
-  
+  if snd.skill_being_used == "Overhand" or snd.skill_being_used == "Breach" then
+    snd.lev_gone = false
+  end
   if #snd.last_affs &gt;= 1 then
     if snd.last_affs[1] == "blaze" or snd.last_affs[1] == "wasi" then
       snd.used.rebounding = true
@@ -23901,7 +23955,7 @@ end</script>
 						<regexCodeList>
 							<string>^(\w+)('s|') broken legs cause (the )?\w+ to fall to the ground in a heap\.$</string>
 							<string>^(\w+) wobbles uncertainly before falling to the ground, (the )?\w+ leg pulled awkwardly behind (the )?\w+ own head\.$</string>
-							<string>^(\w+) leaps up in what is apparently an attempt at a graceful swan dive\. (the )?\w+ smacks ?head first into the solid ground\.$</string>
+							<string>^(\w+) leaps up in what is apparently an attempt at a graceful swan dive\. (the )?\w+ smacks head ?first into the solid ground\.$</string>
 							<string>^You whistle at .+ and send (the )?\w+ barreling into (\w+), knocking (the )?\w+ to the ground\.$</string>
 							<string>^The injury to (\w+)('s|') knees causes (the )?\w+ legs to buckle and (the )?\w+ falls to the ground in a heap\.$</string>
 							<string>barrels into (\w+) and knocks (the )?\w+ to the ground\.$</string>
@@ -23927,8 +23981,10 @@ end</script>
 							<string>^With a struggle, (\w+) attempts to call upon \w+ willpower reserves, however the effort leaves \w+ looking dizzy and weak. \w+ eyes quickly grow unfocused and .+ sways? slightly before crashing heavily to the ground, and \w+ quickly slips into unconsciousness.$</string>
 							<string>^A blow knocks (\w+)'s? balance too far from the balls of \w+ feet, bringing \w+ crashing to the ground\.$</string>
 							<string>^(\w+) is dragged into the location from the \w+ by a thin thread looped around one of \w+ feet\.$</string>
+							<string>^.+ whips one of its muscular tentacles toward (\w+), sending \w+ toppling to the ground in an unceremonious pile\.$</string>
 						</regexCodeList>
 						<regexCodePropertyList>
+							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
 							<integer>1</integer>
@@ -25690,8 +25746,11 @@ end</script>
     snd.target_got(matches[3].." crippled")
   end
   snd.message("&lt;red&gt;"..matches[2].."'s &lt;white&gt;"..matches[3].." was broken!")
-  
   snd.limb_status[matches[3]] = "broken"
+  local dmg = 33.34-snd.limb_dmg[matches[3]]
+  if dmg &gt; 0 then
+    snd.took_limb_dmg(matches[3], dmg)
+  end
 elseif snd.toggles.nontargetgags and snd.toggles.gags then
   deleteFull()
 end</script>
@@ -29838,7 +29897,7 @@ snd.send(string)</script>
 						</Trigger>
 						<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 							<name>arti pipes</name>
-							<script>snd.toggles.lighting = false</script>
+							<script>snd.pipes_lit = true</script>
 							<triggerType>0</triggerType>
 							<conditonLineDelta>0</conditonLineDelta>
 							<mStayOpen>0</mStayOpen>
@@ -30586,7 +30645,7 @@ end</script>
 					</Trigger>
 					<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="yes" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="yes" isColorTriggerFg="no" isColorTriggerBg="no">
 						<name>got hit</name>
-						<script>local exclusions = {"Relic", "Raloth", "Artifact", "Survival", "Research", "Manipulation", "Tattoos"}
+						<script>local exclusions = {"Destruction", "Weaponry", "Relic", "Raloth", "Artifact", "Survival", "Research", "Manipulation", "Tattoos"}
 local skill = multimatches[2][3]
 
   if not table.contains(exclusions, skill) then
@@ -35228,7 +35287,7 @@ cecho("\n                     &lt;ForestGreen&gt; It automatically turns on hitt
 cecho("\n&lt;DeepSkyBlue&gt;grp &lt;person&gt;          &lt;ForestGreen&gt;Inform &lt;green&gt;Sunder&lt;ForestGreen&gt; of your bashing party.")
 cecho("\n&lt;DeepSkyBlue&gt;grp queen rook pawn   &lt;ForestGreen&gt;Example of adding more than one person.")
 cecho("\n&lt;DeepSkyBlue&gt;orbs                  &lt;ForestGreen&gt;Activate your ylem orbs with one alias!")
-cecho("\n&lt;DeepSkyBlue&gt;sunder toggle generic &lt;ForestGreen&gt;Use generic mob type instead of number to bash.")
+cecho("\n&lt;DeepSkyBlue&gt;toggle generic &lt;ForestGreen&gt;Use generic mob type instead of number to bash.")
 cecho("\n")
 cecho("\n")
 cecho("\n&lt;green&gt;Sunder&lt;ForestGreen&gt; has some more advanced features listed in &lt;DeepSkyBlue&gt;sunder help autobashing&lt;ForestGreen&gt;.")
@@ -35816,6 +35875,7 @@ snd.toggle("calling")
 						<script>if matches[2] == "off" then
   if snd.toggles.listening then
     snd.toggle("listening")
+    snd.callers = {}
   end
 else
   if not snd.toggles.listening then
@@ -56738,7 +56798,7 @@ end</script>
   snd.hidden_afflictions = 0
   snd.parrying = "none"
   snd.crescentable = true
-  
+  snd.pipes_lit = false
   snd.runemarkMajor = "none"
   snd.runemarkMinor = "none"
 end</script>
@@ -57331,6 +57391,7 @@ snd.priorities =
     "def_resilience",
     "def_desolation",
     "def_circulation",
+    "def_concentrate",
     "def_shadowblow",
     "def_blurred",
     "def_elusion",
@@ -57340,7 +57401,6 @@ snd.priorities =
     "def_lifescent",
     "def_lifevision",
     "def_stalking",
-    "def_concentrate",
     "def_entwine",
     "def_devilpact",
     "def_ricochet",
@@ -58384,10 +58444,11 @@ function snd.aff_have(affliction)
 	 hit_aff = false
 	 for aff in pairs(snd.circle_affs) do
 	  if not hit_aff then
-		 snd.send("firstaid predict "..snd.circle_affs[aff])
 		 if snd.circle_affs[aff] == affliction then
 		  hit_aff = true
-		 end
+		 else
+     	snd.send("firstaid predict "..snd.circle_affs[aff])
+     end
 		end
 	 end
 	end
@@ -58395,10 +58456,11 @@ function snd.aff_have(affliction)
 	 hit_aff = false
 	 for aff in pairs(snd.square_affs) do
 	  if not hit_aff then
-		 snd.send("firstaid predict "..snd.square_affs[aff])
 		 if snd.square_affs[aff] == affliction then
 		  hit_aff = true
-		 end
+		 else
+     	snd.send("firstaid predict "..snd.square_affs[aff])
+     end
 		end
 	 end
 	end
@@ -58406,10 +58468,11 @@ function snd.aff_have(affliction)
 	 hit_aff = false
 	 for aff in pairs(snd.triangle_affs) do
 	  if not hit_aff then
-		 snd.send("firstaid predict "..snd.triangle_affs[aff])
 		 if snd.triangle_affs[aff] == affliction then
 		  hit_aff = true
-		 end
+		 else
+     	snd.send("firstaid predict "..snd.triangle_affs[aff])
+     end
 		end
 	 end
 	end
@@ -58886,6 +58949,8 @@ def_delirium = {defense = "delirium", type = "normal", effect = "cure a random A
 def_ravage = {defense = "ravage", type = "normal", effect = "makes your fists attack cause ablaze", balance = {balanceequilibriumtake = "invoke ravage"}, state = "down", needit = false, timer = createStopWatch(), skill = "Ravage" },
 
 --Revenant
+def_iyedlo = {defense = "iyedlo", type = "normal", effect = "Hit faster", balance = {}, state = "down", needit = false, timer = createStopWatch(), skill = "Iyedlo"},
+
 def_influence_phantasm = {defense = "influence_phantasm", type = "normal", effect = "Increase chance of hitting", balance = {balanceequilibriumtake = "phantasm influence"}, state = "down", needit = false, timer = createStopWatch(), skill = "Influence"},
 def_congeal_phantasm = {defense = "congeal_phantasm", type = "normal", effect = "15% cutting/blunt/magic resist", balance = {balanceequilibriumtake = "phantasm congeal"}, state = "down", needit = false, timer = createStopWatch(), skill = "Congeal"},
 def_leech_phantasm = {defense = "leech_phantasm", type = "normal", effect = "Increased constitution, regenerate health", balance = {balanceequilibriumtake = "phantasm leech"}, state = "down", needit = false, timer = createStopWatch(), skill = "Leech"},
@@ -58974,6 +59039,7 @@ def_lipreading = {defense = "lipreading", type = "normal", effect = "Hear throug
 
 --Templar
 def_maingauche = {defense = "maingauche", type = "normal", effect = "Chance to counter attack", balance = {needyequilibriumtake = "maingauche"}, state = "down", needit = false, timer = createStopWatch(), skill = "MainGauche"},
+def_waterflow = {defense = "waterflow", type = "normal", effect = "Hit faster", balance = {}, state = "down", needit = false, timer = createStopWatch(), skill = "Waterflow"},
 
 def_accuracy_aura = {defense = "accuracy_aura", type = "normal", effect = "Increase chance of hitting", balance = {balanceequilibriumtake = "aura accuracy"}, state = "down", needit = false, timer = createStopWatch(), skill = "Accuracy"},
 def_protection_aura = {defense = "protection_aura", type = "normal", effect = "15% cutting/blunt/magic resist", balance = {balanceequilibriumtake = "aura protection"}, state = "down", needit = false, timer = createStopWatch(), skill = "Protection"},
@@ -59822,6 +59888,9 @@ end</script>
   ["Forbidden occultism informs your every move."] = "occultism",
   
   ["Your physical form is partly ethereal."] = "ethereal",
+  
+  ["Your weapons flow through the air."] = "iyedlo",
+  ["Your weapons will flow like water."] = "waterflow",
 }
  </script>
 							<eventHandlerList />
@@ -60998,7 +61067,7 @@ end</script>
 						<script>snd.paths = snd.paths or {}
 snd.paths.high = {
   "Luzith's Lair",
-  "Tiyen Esitiyi",
+  "Tiyen Esityi",
   "Dovan Hollow",
   "Xaanhal",
   "Spiral of the Corrupt",
@@ -64557,7 +64626,7 @@ sunder_areaPaths = {
     v12997 = "25687",
     v13030 = "12812",
     v13032 = "12686",
-    v13834 = "56870",
+    v13834 = "12670",
     v14393 = "14395",
     v14395 = "12654",
     v14480 = "17448",
@@ -64594,7 +64663,6 @@ sunder_areaPaths = {
     v44580 = "44585",
     v44585 = "",
     v44881 = "44576",
-    v56870 = "12670",
     v66230 = "21057",
     v66438 = "11941",
     v66509 = "66786",
@@ -77540,7 +77608,7 @@ function snd.no_parry()
   "writhe_grappled",
   "writhe_dartpinned",
  }
- if snd.class == "sentinel" then
+ if snd.class == "Sentinel" or snd.class == "Executor" then
   table.insert(noparryaffs, "paresis")
  end 
  if snd.checksomeAffs(noparryaffs, 1) then no_parry = true end
@@ -79077,6 +79145,18 @@ end</script>
                 end 
               end
              end,
+    Shape = function(target, hidden)
+              if not hidden then return end
+              if not snd.maybe_affs[1] then return end
+              local shape = snd.maybe_affs[1]:lower()
+              if shape == "square" then
+                snd.all_class_attacks.Geometrics.Square(target)
+              elseif shape == "triangle" then
+                snd.all_class_attacks.Geometrics.Triangle(target)
+              elseif shape == "circle" then
+                snd.all_class_attacks.Geometrics.Circle(target)
+              end
+            end,
     Sealing = function(target, shape)
                 snd.target_got(shape.."_sealed")
                 if shape == "square" then
@@ -79300,11 +79380,12 @@ end</script>
               snd.onHit2({"Dodge", "Parry", "Rebounding"})
             end,
     Stoneblast = function(target)
-                  if snd.used.rebounding then
-                    snd.used.rebounding = false
-                  else
-                    snd.used.shield = false
-                  end
+                  --removed this in favor of a trigger
+                  -- if snd.used.rebounding then
+                    -- snd.used.rebounding = false
+                  -- else
+                    -- snd.used.shield = false
+                  -- end
                 end,
     Fracture = function(target, where)
                  table.insert(snd.maybe_affs, where.."_crippled")
@@ -79470,11 +79551,12 @@ end</script>
               snd.onHit2({"Dodge", "Parry", "Rebounding"})
             end,
     Riptide = function(target)
-                  if snd.used.rebounding then
-                    snd.used.rebounding = false
-                  else
-                    snd.used.shield = false
-                  end
+                  --removed this in favor of a trigger
+                  -- if snd.used.rebounding then
+                    -- snd.used.rebounding = false
+                  -- else
+                    -- snd.used.shield = false
+                  -- end
                 end,
     Buckle = function(target, where)                 
                  table.insert(snd.maybe_affs, where.."_crippled")
@@ -81785,7 +81867,18 @@ end</script>
                snd.target_got("matrix")
                matrix_timer = tempTimer(20.0,[[snd.target_cured("matrix")]])
              end,
-
+    Emanation = function(target, hidden)
+              if not hidden then return end
+              if not snd.maybe_affs[1] then return end
+              local shape = snd.maybe_affs[1]:lower()
+              if shape == "disgust" then
+                snd.all_class_attacks.Cultivation.Disgust(target)
+              elseif shape == "joy" then
+                snd.all_class_attacks.Cultivation.Joy(target)
+              elseif shape == "fear" then
+                snd.all_class_attacks.Cultivation.Fear(target)
+              end
+            end,
     Disgust = function(target) --circle
               local t = {"merciful", "masochism", "berserking", "recklessness"} -- initialize table with circle affs
               for _, v in pairs(t) do -- iterate circle affs
