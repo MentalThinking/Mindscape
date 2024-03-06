@@ -6313,8 +6313,8 @@ snd.loyalsattacking = false</script>
 							<colorTriggerFgColor>#000000</colorTriggerFgColor>
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
-								<string>^Your spirit familiar morphs into the form of a (\w+) spirit\.$</string>
-								<string>^You use Experimentation Reconfiguration on a (.*) experiment\.$</string>
+								<string>^Your spirit familiar morphs into the form of an? (\w+) spirit\.$</string>
+								<string>^You use Experimentation Reconfiguration on an? (.*) experiment\.$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
@@ -17881,8 +17881,10 @@ disableTrigger("Turmoil confirmation hit")</script>
 								<colorTriggerBgColor>#000000</colorTriggerBgColor>
 								<regexCodeList>
 									<string>^The blow strikes an artery and .+ slumps slightly\.</string>
+									<string>^The blow surprises (\w+) as .+ struggles on .+ feet.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
+									<integer>1</integer>
 									<integer>1</integer>
 								</regexCodePropertyList>
 							</Trigger>
@@ -18060,6 +18062,30 @@ end</script>
 								<colorTriggerBgColor>#000000</colorTriggerBgColor>
 								<regexCodeList>
 									<string>^(\w+) backs away and out of \w+(?:'s)? reach\.$</string>
+								</regexCodeList>
+								<regexCodePropertyList>
+									<integer>1</integer>
+								</regexCodePropertyList>
+							</Trigger>
+							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+								<name>Throatstrike confirmation hit</name>
+								<script>if snd.target == matches[2] then
+  snd.target_got("crippled_throat")
+  snd.target_got("blurry_vision")
+end
+disableTrigger("Throatstrike confirmation hit")</script>
+								<triggerType>0</triggerType>
+								<conditonLineDelta>0</conditonLineDelta>
+								<mStayOpen>0</mStayOpen>
+								<mCommand></mCommand>
+								<packageName></packageName>
+								<mFgColor>#ff0000</mFgColor>
+								<mBgColor>#ffff00</mBgColor>
+								<mSoundFile></mSoundFile>
+								<colorTriggerFgColor>#000000</colorTriggerFgColor>
+								<colorTriggerBgColor>#000000</colorTriggerBgColor>
+								<regexCodeList>
+									<string>^The blow forcibly dislodges (\w+)'s larynx as .+ eyes water with pain.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
@@ -18487,15 +18513,7 @@ end</script>
 								<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 									<name>Shadeling</name>
 									<script>if matches[2] == snd.target then
- if snd.checkAff("frozen") then
-
- elseif snd.checkAff("shivering") then
-  snd.target_got("frozen")
- elseif snd.checkAff("no_caloric") then
-  snd.target_got("shivering")
- else
-  snd.target_got("no_caloric")
- end
+  snd.target_got("cold")
 end</script>
 									<triggerType>0</triggerType>
 									<conditonLineDelta>0</conditonLineDelta>
@@ -19732,17 +19750,17 @@ disableTrigger("Raloth_Capture")</script>
 							<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
 								<name>Lysirine</name>
 								<script>if matches[2] == snd.target then
-  if snd.target_has("paresis") then
+  if snd.checkAff("paresis") then
     snd.target_got("heartflutters")
   else
-    snd.target_got("paresis")
+      snd.target_got("paresis")
   end
-  if snd.target_has("impatience") then
+    if snd.checkAff("impatience") then
     snd.target_got("hallucinations")
   else
     snd.target_got("impatience")
   end
-  if snd.target_has("confusion") then
+  if snd.checkAff("confusion") then
     snd.target_got("stupidity")
   else
     snd.target_got("confusion")
@@ -23180,8 +23198,8 @@ end</script>
 							<colorTriggerFgColor>#000000</colorTriggerFgColor>
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
-								<string>^(\w+) swallows (a|an) (.*) pill\.$</string>
-								<string>^(\w+) swallows (a|an) pill of (.*)\.$</string>
+								<string>^(?:You sense )?(\w+) swallows (a|an) (.*) pill\.$</string>
+								<string>^(?:You sense )?(\w+) swallows (a|an) pill of (.*)\.$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
@@ -23209,7 +23227,7 @@ end</script>
 							<colorTriggerFgColor>#000000</colorTriggerFgColor>
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
-								<string>^(\w+) takes a long drag off (the )?\w+ pipe filled with (\w+)\.$</string>
+								<string>^(?:You sense )?(\w+) takes a long drag off (the )?\w+ pipe filled with (\w+)\.$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
@@ -23283,7 +23301,7 @@ end</script>
 							<colorTriggerFgColor>#000000</colorTriggerFgColor>
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
-								<string>^(\w+) presses (a|an) (\w+) poultice against (the )?\w+ (.*), rubbing the poultice into (the )?\w+ flesh\.$</string>
+								<string>^(?:You sense )?(\w+) presses (a|an) (\w+) poultice against (the )?\w+ (.*), rubbing the poultice into (the )?\w+ flesh\.$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
@@ -23305,7 +23323,7 @@ end</script>
 							<colorTriggerFgColor>#000000</colorTriggerFgColor>
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
-								<string>^(\w+) takes a long drag off (the )?\w+ pipe\.$</string>
+								<string>^(?:You sense )?(\w+) takes a long drag off (the )?\w+ pipe\.$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
@@ -23333,7 +23351,7 @@ end
 							<colorTriggerFgColor>#000000</colorTriggerFgColor>
 							<colorTriggerBgColor>#000000</colorTriggerBgColor>
 							<regexCodeList>
-								<string>^(.*) touches a tree of life tattoo\.$</string>
+								<string>^(\w+) touches a tree of life tattoo\.$</string>
 							</regexCodeList>
 							<regexCodePropertyList>
 								<integer>1</integer>
@@ -23349,7 +23367,7 @@ end
     ["armpit-jawlock"] = "armpitlock",
     ["neck-jawlock"] = "necklock",
     ["entanglement by ropes"] = "ropes",
-    ["tied ropes"] = "bind",
+    ["entanglement by tied ropes"] = "bind",
     ["impalement"] = "impaled",
     ["grappling"] = "grappled",
     ["entanglement by vines"] = "vines",
@@ -26174,7 +26192,7 @@ end</script>
 								<colorTriggerFgColor>#000000</colorTriggerFgColor>
 								<colorTriggerBgColor>#000000</colorTriggerBgColor>
 								<regexCodeList>
-									<string>^(\w+) presses a mending poultice against (the )?\w+ (head|torso|right leg|left leg|right arm|left arm|skin|legs|arms), rubbing the poultice into (the )?\w+ flesh\.$</string>
+									<string>^(?:You sense )?(\w+) presses a mending poultice against (the )?\w+ (head|torso|right leg|left leg|right arm|left arm|skin|legs|arms), rubbing the poultice into (the )?\w+ flesh\.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
@@ -26260,7 +26278,7 @@ end
 								<colorTriggerFgColor>#000000</colorTriggerFgColor>
 								<colorTriggerBgColor>#000000</colorTriggerBgColor>
 								<regexCodeList>
-									<string>^(\w+) presses a restoration poultice against (the )?\w+ (head|torso|right leg|left leg|right arm|left arm), rubbing the poultice into (the )?\w+ flesh\.$</string>
+									<string>^(?:You sense )?(\w+) presses a restoration poultice against (the )?\w+ (head|torso|right leg|left leg|right arm|left arm), rubbing the poultice into (the )?\w+ flesh\.$</string>
 								</regexCodeList>
 								<regexCodePropertyList>
 									<integer>1</integer>
@@ -42181,7 +42199,7 @@ end</script>
             end
           elseif stalled then
             if
-              snd.checkAff("no_caloric") and
+              snd.checkAff("shivering") and
               not snd.checkAff("direfrost") and
               not snd.checkAff("frostbrand")
             then
@@ -42201,7 +42219,7 @@ end</script>
             end
           elseif stalled then
             if
-              snd.checkAff("no_caloric") and
+              snd.checkAff("shivering") and
               not snd.checkAff("direfrost") and
               not snd.checkAff("frostbrand")
             then
@@ -42222,7 +42240,7 @@ end</script>
           elseif stalled then
             --not snd.direfrost and not snd.checkAff("frostbrand") then
             if
-              snd.checkAff("no_caloric") and
+              snd.checkAff("shivering") and
               not snd.checkAff("direfrost") and
               not snd.checkAff("frostbrand")
             then
@@ -53180,7 +53198,7 @@ end</script>
             end
           elseif stalled then
             if
-              snd.checkAff("no_caloric") and
+              snd.checkAff("shivering") and
               not snd.checkAff("frostbite") and
               not snd.checkAff("excess_phlegm")
             then
@@ -53200,7 +53218,7 @@ end</script>
             end
           elseif stalled then
             if
-              snd.checkAff("no_caloric") and
+              snd.checkAff("shivering") and
               not snd.checkAff("frostbite") and
               not snd.checkAff("excess_phlegm")
             then
@@ -53221,7 +53239,7 @@ end</script>
           elseif stalled then
             --not snd.direfrost and not snd.checkAff("frostbrand") then
             if
-              snd.checkAff("no_caloric") and
+              snd.checkAff("shivering") and
               not snd.checkAff("frostbite") and
               not snd.checkAff("excess_phlegm")
             then
@@ -56258,10 +56276,12 @@ end</script>
 
   if snd.class == "Luminary" then
     snd.defenses.def_constitution = snd.alternative_class_defenses.Luminary_constitution
+    snd.defense.def_insulation = snd.alternative_class_defenses.Luminary_insulation
   end
   
   if snd.class == "Earthcaller" then
     snd.defenses.def_constitution = snd.alternative_class_defenses.Earthcaller_constitution
+    snd.defense.def_insulation = snd.alternative_class_defenses.Earthcaller_insulation
   end
   
   if snd.class == "Monk" then
@@ -56975,7 +56995,7 @@ function snd.can_cast()
 end
 
 function snd.can_tattoo()
-  if snd.not_aff("paresis") then
+  if snd.not_aff("paresis") and snd.not_aff("frozen") then
     return true
   else
     return false
@@ -57846,6 +57866,7 @@ snd.priorities =
     "def_deathsight",
     "def_insomnia",
     "def_frost",
+    "def_arcane",
     "def_venom",
     "def_levitation",
     "def_caloric",
@@ -58243,6 +58264,10 @@ snd.method_priority = {
             if snd.balance.vitality and snd.full_vitals() then
               table.insert(snd.queue, k)
             end
+          elseif k == "def_clarity" then
+            if not snd.checksomeSelfAffs(snd.cures.antipsychotic,1) then
+              table.insert(snd.queue, k)
+            end
           elseif (k == "def_shroud" or k == "def_ghost" or k == "def_hiding") then
             if snd.defenses.def_phase.state ~= "deffed" then
               table.insert(snd.queue, k)
@@ -58549,9 +58574,10 @@ aff_flamewreathed_limb = {state = "healed", effect = "extra limb damage if hit b
 aff_flared = {state = "healed", effect = "unable to stealth or go incorporeal", cures = {}, assess = false, timer = createStopWatch()},
 aff_flash_blindness = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
 aff_forestbrand = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
+aff_frigid = {state = "healed", effect = "Delayed movement", cures = {salve = "caloric to torso", tree = "send"}, assess = false, timer = createStopWatch()},
 aff_frostbrand = {state = "healed", effect = "continually freezes over time", cures = {}, assess = false, timer = createStopWatch()},
 aff_frostwreath = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
-aff_frozen = {state = "healed", effect = "", cures = {salve = "caloric to torso", tree = "send"}, assess = false, timer = createStopWatch()},
+aff_frozen = {state = "healed", effect = "Stops movement", cures = {salve = "caloric to torso", tree = "send"}, assess = false, timer = createStopWatch()},
 aff_frozen_feet = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
 aff_generosity = {state = "healed", effect = "", cures = {herb = "bellwort", tree = "send", focus = "send"}, assess = false, timer = createStopWatch()},
 aff_glasslimb = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
@@ -58902,7 +58928,7 @@ aff_remorse = {state = "healed", effect = "", cures = {}, assess = false, timer 
 aff_contrition = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
 aff_fragments = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
 aff_immobility = {state = "healed", effect = "Can't move", cures = {}, assess = false, timer = createStopWatch()},
-
+aff_timewarped = {state = "healed", effect = "", cures = {}, assess = false, timer = createStopWatch()},
 }
 </script>
 							<eventHandlerList />
@@ -59209,8 +59235,9 @@ def_thirdeye = {defense = "thirdeye", type = "normal", effect = "Adds locations 
 def_venom = {defense = "antivenin", type = "normal", effect = "Protects against poison damage", balance = {vial = "antivenin"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
 def_levitation = {defense = "levitation", type = "normal", effect = "Protects against falling effects", balance = {vial = "levitation"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
 def_frost = {defense = "temperance", type = "normal", effect = "Protects against fire damage", balance = {vial = "frost"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
-def_speed = {defense = "speed", type = "green", effect = "Protects against aeon affliction", balance = {drink = "speed"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
-def_caloric = {defense = "insulation", type = "normal", effect = "Protects against cold damage", balance = {salve = "caloric"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
+def_speed = {defense = "speed", type = "green", effect = "Protects against aeon affliction", balance = {vial = "speed"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
+def_arcane = {defense = "arcane", type = "normal", effect = "Protects against elemental damage", balance = {vial = "arcane"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
+--def_caloric = {defense = "insulation", type = "normal", effect = "Protects against cold damage", balance = {salve = "caloric"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
 def_vigor = {defense = "vigor", type = "normal", effect = "Critical hits heal you", balance = {vial = "vigor"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
 def_fangbarrier = {defense = "fangbarrier", type = "normal", effect = "Protects against syssin bites", balance = {special = "apply paste"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
 def_rebounding = {defense = "rebounding", type = "blue", effect = "Causes weapon attacks to backfire", balance = {smoke = "reishi"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
@@ -59234,7 +59261,7 @@ def_hypersight = {defense = "hypersight", type = "normal", effect = "see through
 def_lifevision = {defense = "lifevision", type = "normal", effect = "See all things living, sometimes identify illusions.", balance = {balanceequilibriumtake = "lifevision"}, state = "down", needit = false, timer = createStopWatch(), skill = "Lifevision" },
 def_selfishness = {defense = "selfishness", type = "MediumSpringGreen", effect = "Too selfish to put valuables at risk.", balance ={balanceequilibriumtake = "selfishness"}, state = "down", needit = false, timer = createStopWatch(), skill = "Generic"},
 def_returning = {defense = "returning", type = "normal", effect = "Return thrown weapons to your hands", balance = {balanceequilibriumtake = "returning on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Returning"},
-def_irongrip = {defense = "irongrip", type = "normal", effect = "Prevents disarming", balance = {balanceequilibrium = "irongrip"}, state = "down", needit = false, timer = createStopWatch(), skill = "Irongrip"},
+def_irongrip = {defense = "irongrip", type = "normal", effect = "Prevents disarming", balance = {balanceequilibriumtake = "irongrip"}, state = "down", needit = false, timer = createStopWatch(), skill = "Irongrip"},
 
 
 --Ylem
@@ -59326,7 +59353,7 @@ def_halfbeat = {defense = "halfbeat", type = "normal", effect = "Speed up music 
 def_aurora = {defense = "aurora", type = "normal", effect = "Damage bonus against hostiles", balance = {needyequilibriumtake = "weave aurora"}, state = "down", needit = false, timer = createStopWatch(), skill = "Aurora"},
 def_equipoise = {defense = "equipoise", type = "normal", effect = "Follow when off eq", balance = {needybalancetake = "equipoise on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Equipoise"},
 def_stretching = {defense = "stretching", type = "normal", effect = "Heal limb damage on mending cure", balance = {needybalancetake = "stretching on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Stretching"},
-def_destiny = {defense = "destiny", type = "normal", effect = "Certain Weaving spells cost no eq on next cast", balance = {special = "sing song of destiny"}, state = "down", needit = false, timer = createStopWatch(), skill = "Destiny"},
+def_destiny = {defense = "song_destiny", type = "normal", effect = "Certain Weaving spells cost no eq on next cast", balance = {special = "sing song of destiny"}, state = "down", needit = false, timer = createStopWatch(), skill = "Destiny"},
 
 --Bloodborn
 def_victimise = {defense = "victimise", type = "normal", effect = "PvE damage", balance = {balanceequilibriumtake = "unleash victimise on"}, state = "down", needit = false, timer = createStopWatch(), skill = "Victimise" },
@@ -59360,6 +59387,8 @@ def_battlehymn_strength = {defense = "battlehymn_strength", type = "normal", eff
 def_battlehymn_constitution = {defense = "battlehymn_constitution", type = "normal", effect = "Increases constitution", balance = {needyequilibriumtake = "dirge battlehymn constitution"}, state = "down", needit = false, timer = createStopWatch(), skill = "Battlehymn" },
 def_battlehymn_intelligence = {defense = "battlehymn_intelligence", type = "normal", effect = "Increases intelligence", balance = {needyequilibriumtake = "dirge battlehymn intelligence"}, state = "down", needit = false, timer = createStopWatch(), skill = "Battlehymn" },
 def_battlehymn_dexterity = {defense = "battlehymn_dexterity", type = "normal", effect = "Increases dexterity", balance = {needyequilibriumtake = "dirge battlehymn dexterity"}, state = "down", needit = false, timer = createStopWatch(), skill = "Battlehymn" },
+
+def_insulation = {defense = "insulation", type = "normal", effect = "Prevents frozen buildup", balance = {needybalancetake = "tectonic insulation"}, state = "down", needit = false, timer = createStopWatch(), skill = "Insulation"},
 
 --Executor
 def_girded = {defense = "girded", type = "normal", effect = "10% Resist to Cutting/Blunt", balance = {needyequilibriumtake = "gird"}, state = "down", needit = false, timer = createStopWatch(), skill = "Gird"},
@@ -59821,6 +59850,8 @@ Bloodborn_empowered_moon = {defense = "empowered_moon", type = "normal", effect 
 Sciomancer_empowered_moon = {defense = "empowered_moon", type = "normal", effect = "extra mana recovery", balance = {balanceequilibriumtake = "cast sagacity"}, state = "down", needit = false, timer = createStopWatch(), skill = "Sagacity" },
 Runecarver_empowered_moon = {defense = "empowered_moon", type = "normal", effect = "extra mana recovery", balance = {balanceequilibriumtake = "runecarve mysticism"}, state = "down", needit = false, timer = createStopWatch(), skill = "Mysticism" },
 Skill_insomnia = {defense = "insomnia", type = "normal", effect = "Prevents sleep effects", balance = {special = "insomnia"}, state = "down", needit = false, timer = createStopWatch(), skill = "Insomnia"},
+Earthcaller_insulation = {defense = "insulation", type = "normal", effect = "Prevents frozen buildup", balance = {needybalancetake = "tectonic insulation"}, state = "down", needit = false, timer = createStopWatch(), skill = "Insulation"},
+Luminary_insulation = {defense = "insulation", type = "normal", effect = "Prevents frozen buildup", balance = {needybalancetake = "evoke warmth"}, state = "down", needit = false, timer = createStopWatch(), skill = "Insulation"},
 }
 
 
@@ -59951,6 +59982,7 @@ end</script>
   ["You possess the sight of the third eye."] = "thirdeye",
   ["Your resistance to damage by poison has been increased."] = "venom",
   ["You are tempered against fire damage."] = "frost",
+  ["You are tempered against elemental magic."] = "arcane",
   ["You walk on a small cushion of air."] = "levitation",
   ["Your sense of time is heightened, and your reactions are speeded."] = "speed",
   ["You are insulated against the harsh cold."] = "caloric",
@@ -76784,8 +76816,9 @@ def_cloak_tattoo = "on",
 def_kola = "on",
 def_deathsight = "on",
 def_insomnia = "on",
-def_frost = "on",
-def_venom = "on",
+def_arcane = "on",
+--def_frost = "on",
+--def_venom = "on",
 def_levitation = "on",
 def_speed = "on",
 def_caloric = "on",
@@ -76817,7 +76850,7 @@ def_conduit_crutch = "on",
 },
 
 archivist = {
-def_irongrip = "on",
+def_irongrip = "once",
 def_spheres =  "once",
 def_linked = "once",
 def_oneness = "once",
@@ -76866,7 +76899,7 @@ def_soulthirst = "on",
 def_soul_fortify = "on",
 def_soul_fracture = "on",
 def_soul_body = "once",
-def_irongrip = "on",
+def_irongrip = "once",
 def_herculeanrage = "once",
 def_cruelty = "on",
 },
@@ -76879,7 +76912,7 @@ def_constitution = "once",
 },
 
 indorani = {
-def_irongrip = "on",
+def_irongrip = "once",
 def_deathaura = "once",
 def_lifevision = "on",
 def_soulmask = "on",
@@ -76890,7 +76923,7 @@ def_shroud = "on",
 def_hierophant = "once",
 def_chariot = "on",
 def_eclipse = "on",
-def_devilpact = "on",
+-- def_devilpact = "on",
 def_soulcage = "on",
 },
 
@@ -76914,7 +76947,7 @@ def_boosted_regen = "on",
 },
 
 oneiromancer = {
-def_irongrip = "on",
+def_irongrip = "once",
 def_intoxication = "once",
 def_lifevision = "on",
 def_redoubt = "on",
@@ -76925,7 +76958,7 @@ def_shroud = "on",
 def_fan = "once",
 def_crane = "on",
 def_cloud = "on",
-def_faerie = "on",
+--def_faerie = "on",
 },
 
 praenomen = {
@@ -76982,7 +77015,7 @@ def_featherstep = "once",
 },
 
 sentinel = {
-def_irongrip = "on",
+def_irongrip = "once",
 def_lifesap = "on",
 def_barkskin = "on",
 def_hardiness = "on",
@@ -77056,7 +77089,7 @@ def_ancest_victory = "on",
 def_displacement  = "on",
 def_ancestral_bolster = "on",
 def_invocation  = "on",
-def_irongrip = "on",
+def_irongrip = "once",
 def_roaring  = "once",
 def_intervention = "once",
 def_shroud = "once",
@@ -77116,7 +77149,7 @@ predator = {
 },
 
 executor = {
-  def_irongrip = "on",
+  def_irongrip = "once",
   def_bloodlust = "on",
   def_girded = "on",
   def_stoicism = "on",
@@ -77128,7 +77161,7 @@ executor = {
 },
 
 voidseer = {
-	def_irongrip = "on",
+	def_irongrip = "once",
 	def_erudition = "on",
 	def_synergism = "on",
 	def_introspection = "on",
@@ -77649,6 +77682,7 @@ snd.hound_attacks = {
     blisters = "poisonclaw",
     limp_veins = "poisonclaw",
     frozen = "tundralhowl",
+    frigid = "tundralhowl",
     shivering = "tundralhowl",
     no_caloric = "tundralhowl",
     blurry_vision = "ululate",
@@ -77668,6 +77702,7 @@ snd.hound_attacks = {
     limp_veins = "poison",
     frozen = "freeze",
     shivering = "freeze",
+    frigid = "freeze",
     no_caloric = "freeze",
     blurry_vision = "dirge",
     mark = "mark",
@@ -77785,8 +77820,8 @@ antipsychotic = {
 "hallucinations",
 "paranoia",
 "hatred",
-"addiction",
 "hypersomnia",
+"addiction",
 "blood_curse",
 "blighted",
 },
@@ -77844,8 +77879,9 @@ epidermal = {
 caloric = {
 "hypothermia",
 "frozen",
+"frigid",
 "shivering",
-"no_caloric"
+--"no_caloric"
 },
 
 focus = {
@@ -78041,9 +78077,10 @@ function snd.target_got(affliction)
     return
   end
   
-  if affliction == "cold" then
-    if not snd.checkAff("no_caloric") then affliction = "no_caloric"
+ if affliction == "cold" then
+    if not snd.checkAff("no_insulation") then affliction = "no_insulation"
     elseif not snd.checkAff("shivering") then affliction = "shivering"
+    elseif not snd.checkAff("frigid") then affliction = "frigid"
     elseif not snd.checkAff("frozen") then affliction = "frozen"
     elseif not snd.checkAff("ice_encased") and snd.checkAff("frostbrand") then affliction = "ice_encased"
     else return
@@ -78117,8 +78154,9 @@ function snd.target_cured(affliction)
   if affliction == "cold" then
     if snd.checkAff("ice_encased") then snd.target_cured("ice_encased")
     elseif snd.checkAff("frozen") then snd.target_cured("frozen")
+    elseif snd.checkAff("frigid") then snd.target_cured("frigid")
     elseif snd.checkAff("shivering") then snd.target_cured("shivering")
-    elseif snd.checkAff("no_caloric") then snd.target_cured("no_caloric")
+    --elseif snd.checkAff("no_caloric") then snd.target_cured("no_caloric")
     end
   end 
   
@@ -79516,7 +79554,7 @@ end</script>
                   if not failed then
                     snd.target_got("direfrost")
                   else
-                    snd.target_cured("no_caloric")
+                    snd.target_cured("shivering")
                   end
                 end,
     Ignite = function(target, conditional)
@@ -79705,7 +79743,7 @@ end</script>
                   if not failed then
                     snd.target_got("frostbite")
                   else
-                    snd.target_cured("no_caloric")
+                    snd.target_cured("shivering")
                   end
                 end,
     Boil = function(target, conditional)
@@ -80562,7 +80600,7 @@ end</script>
   ["Sciomancy"] = {
       Chill = function(target, shadowprice)
                 snd.target_got("cold")
-                if shadowprice ~= nil then
+                if shadowprice ~= nil and not snd.checkAff("shivering") then
                   snd.target_got("cold")
                 end
               end,
@@ -81225,18 +81263,21 @@ end</script>
               end,
     Palmstrike = function(target)
                 snd.last_limb_dmg = 3
-                table.insert(snd.maybe_affs, "blurry_vision")
                 enableTrigger("Monk Hit Tracking")
+                  snd.lev_gone = true
               end,
     Jab = function(target)
               	snd.last_limb_dmg = 5
                 enableTrigger("Monk Hit Tracking")
               end,
     Throatstrike = function(target)
+                snd.last_limb_dmg = 3
+                enableTrigger("Monk Hit Tracking")
                 enableTrigger("Throatstrike confirmation hit")
               end,
     Bladehand = function(target)
-                enableTrigger("Turmoil confirmation hit")
+                  snd.last_limb_dmg = 3
+                enableTrigger("Monk Hit Tracking")
               end,
     Slam = function(target)
              snd.target_got("fallen") --Just incase
@@ -81247,7 +81288,19 @@ end</script>
     Wrench = function(target)
                enableTrigger("Wrench confirmation hit")
              end,
-
+  Spinkick = function(target) --6% torso
+                  snd.last_limb_dmg = 6
+                enableTrigger("Monk Hit Tracking")
+          end,
+  Backfist = function(target) --3% head, turmoil
+                  snd.last_limb_dmg = 3
+                enableTrigger("Monk Hit Tracking")
+                enableTrigger("Turmoil confirmation hit")
+          end,
+  Thunderkick = function(target) --5.5% head, 4s uncon if 2 broken arms
+                  snd.last_limb_dmg = 5.5
+                enableTrigger("Monk Hit Tracking")
+          end,
   },
   
   ["Kaido"] = {
@@ -82575,7 +82628,8 @@ end</script>
                 snd.reset_target()
             end,
     Feather = function(target)
-               snd.target_cured("fallen")   
+               snd.target_cured("fallen")
+               snd.lev_gone = true   
              end,
     Armour = function(target)
                snd.target_got("armor_tattoo")
@@ -82875,7 +82929,7 @@ end</script>
   ["Malediction"] = {
       Numb = function(target, spiritpact)
                 snd.target_got("cold")
-                if spiritpact ~= nil then
+                if spiritpact ~= nil and not snd.checkAff("shivering") then
                   snd.target_got("cold")
                 end
               end,
@@ -84199,6 +84253,7 @@ snd.akkari_bal_affs = {
 	"blood_rune",
   "no_caloric",
   "shivering",
+  "frigid",
   "frozen",
   "slickness",
   "no_paste",
@@ -84212,6 +84267,7 @@ snd.akkari_bal_attacks = {
  	blood_rune = "spirit pariah",
   no_caloric = "ague",
 	shivering = "ague",
+  frigid = "ague",
 	frozen = "ague",
 	slickness = "penitence",
   no_paste = "penitence",
@@ -84681,6 +84737,7 @@ end</script>
 						<packageName></packageName>
 						<script>function snd.handleFitness()
  snd.target_cured("asthma")
+ snd.target_got("exhausted")
 end</script>
 						<eventHandlerList />
 					</Script>
